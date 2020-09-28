@@ -2,9 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
-from dairyapp.forms import contactForm, SignUpForm
+from dairyapp.forms import contactForm, SignUpForm, AddVendorForm
 from django.core.mail import send_mail
 from django.conf import settings
+from dairyapp import models
 
 # Create your views here.
 
@@ -46,3 +47,25 @@ def signup(request):
     else:
         form = SignUpForm()
     return render(request, 'registration/signup.html', {'form': form})
+
+
+# @login_required
+def addvendor(request):
+    if request.method == 'POST':
+        form = AddVendorForm(request.POST)
+        if form.is_valid():
+            managername = form.cleaned_data['Manager_Name']
+            vendorname = form.cleaned_data['Vendor_Name']
+            address = form.cleaned_data['Address']
+            vendorcontact = form.cleaned_data['Vendor_Contact']
+
+            status  = form.cleaned_data['Status']
+
+            v = models.Vendor(managername=managername,vendorname=vendorname,address=address,vendorcontact=vendorcontact,status=status)
+            v.save()
+            # return redirect('add_milk_category') # milkcategoryform.html
+            return redirect('home')
+    else:
+        form = AddVendorForm()
+        return render(request, 'vendor/addvendor.html', {'form':form})
+

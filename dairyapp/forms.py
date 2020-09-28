@@ -1,6 +1,9 @@
 from django import forms
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from dairyapp.models import Vendor
+import datetime
 
 
 class contactForm(forms.Form):
@@ -18,3 +21,18 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name','email', 'password1', 'password2')
+
+
+# Add Vendor
+class AddVendorForm(forms.Form):
+    CHOICES = (
+        ('Cow','Cow'),
+        ('Buffaloe','Buffaloe'),
+        ('Others','Others'),
+    )
+    Manager_Name = forms.CharField(required=True, max_length=200)
+    Vendor_Name = forms.CharField(required=True, max_length=200)
+    joining_date = forms.DateField(initial=datetime.date.today)
+    Address = forms.CharField(required=True)
+    Vendor_Contact = forms.CharField(required=True)
+    Status =  forms.BooleanField(required=False,initial=True)

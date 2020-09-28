@@ -1,15 +1,243 @@
-<div class="container">
+<!doctype html>
+<html lang="en">
 
-  <a href="{% url 'signup' %}">Signup</a>
-  <a href="{% url 'login' %}">login</a>
-  <a href="{% url 'addvendor' %}">addvendor</a>
-  <a href="{% url 'add_milk_category' %}">add_milk_category</a>
-  <a href="{% url 'allvendor' %}">allvendor</a>
+<head>
+  {% load static %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-      {% block content %}
-      {% endblock %}
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+    integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
-</div>
+
+  <!-- For datepicker -->
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+
+  <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <title>{% block title %}MyDairy{% endblock %}</title>
+
+  <style type="text/css">
+    body {
+      min-height: 50rem;
+      padding-top: 8.0rem;
+      background-image: linear-gradient(to top, #d5d4d0 0%, #d5d4d0 1%, #eeeeec 31%, #efeeec 75%, #e9e9e7 100%);
+    }
+
+    i {
+      color: #343A40;
+    }
+
+    .menu-text-size {
+      font-size: 14px;
+
+        {
+        % comment %
+      }
+
+      padding:10px;
+
+        {
+        % endcomment %
+      }
+    }
+
+    .navbar {
+      height: 14%;
+      opacity: 1;
+      background-color: #17181B;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    }
+
+    .dropdown:hover .dropdown-menu {
+      display: block;
+      margin-top: 0; // remove the gap so it doesn't close
+    }
+
+    .logo-image {
+      width: 70px;
+      height: 70px;
+    }
+
+    .asteriskField {
+      display: none;
+    }
+
+    form .alert ul li {
+      list-style: none;
+    }
+
+    form .alert ul {
+      padding: 0;
+      margin: 0;
+    }
+
+    #totalid {
+      color: #B81900;
+    }
+
+    th {
+      background-color: #007D91;
+      color: white;
+    }
+
+    .vendor_name_heading {
+      font-family: 'Dancing Script', cursive;
+      color: #800000;
+      text-align: center;
+      font-size: 40px;
+      padding: 7px;
+    }
+
+    tr {
+      text-align: center;
+    }
+
+    #tbodydata {
+      display: block;
+      height: 450px;
+      overflow: auto;
+    }
+
+    thead,
+    tbody tr {
+      display: table;
+      width: 100%;
+      table-layout: fixed;
+    }
+
+    #theadthid {
+      width: calc(100% - 1em)
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+      <div class="container ">
+
+        <div class="logo-image">
+          <img src="{% static 'images/cow.png' %}" alt="logo.png" class="img-fluid">
+        </div>
+
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'home' %}">Home</a>
+            </li>
+            {% if user.profile.user_type == 'Customer' %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'Customer_page' %}">{{user.first_name}}_{{user.last_name}}</a>
+            </li>
+            {% endif %}
+            &nbsp;&nbsp;&nbsp;
+            {% if user.is_authenticated and user.profile.user_type == 'Manager'%}
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                Venders
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item " href="{% url 'addvendor' %}"><i class="fas fa-plus"></i> <span
+                    class="menu-text-size">&nbsp;&nbsp;Vendor</span></a>
+                <a class="dropdown-item" href="{% url 'add_milk_category' %}"><i class="fas fa-plus"></i><span
+                    class="menu-text-size">&nbsp;&nbsp; Milk Category</span></a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{% url 'allvendor' %}"><i class="fa fa-user"></i><span
+                    class="menu-text-size">&nbsp;&nbsp; All Vendors</span></a>
+              </div>
+            </li>
+            &nbsp;&nbsp;&nbsp;
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                Customers
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{% url 'signup' %}"><i class="fas fa-plus"></i><span
+                    class="menu-text-size">&nbsp;&nbsp; Customers</span></a>
+                <a class="dropdown-item" href="{% url 'customer_milk_category' %}"><i class="fas fa-plus"></i><span
+                    class="menu-text-size">&nbsp;&nbsp; Milk Category</span></a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{% url 'allcustomer' %}"> <i class="fa fa-user"></i><span
+                    class="menu-text-size">&nbsp;&nbsp; All Customers</span></a>
+
+              </div>
+            </li>
+
+            {% endif %}
+
+
+
+          </ul>
+
+
+
+          {% if user.is_authenticated %}
+          <ul class="navbar-nav">
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                {% if user.profile.user_type == 'Manager' %}<strong>Manager
+                </strong>{% elif user.profile.user_type == 'Customer'  %}<strong>Customer </strong>
+                {% endif %}{{ user.username }}
+              </a>
+
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{% url 'password_change' %}"><i class="fa fa-cogs"></i><span
+                    class="menu-text-size">&nbsp;&nbsp; Change password</span></a>
+
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i><span
+                    class="menu-text-size">&nbsp;&nbsp; Log out</span></a>
+              </div>
+
+            </li>
+
+          </ul>
+          {% else %}
+          <form class="form-inline my-2 my-lg-0">
+
+            <a href="{% url 'login' %}" class="btn btn-outline-primary">Log in</a>
+          </form>
+          {% endif %}
+        </div>
+      </div>
+
+  </nav>
+
+  <div class="container">
+
+    {% block content %}
+    {% endblock %}
+
+  </div>
 
 </body>
+
 </html>

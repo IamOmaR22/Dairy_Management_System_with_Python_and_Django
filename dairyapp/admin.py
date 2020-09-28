@@ -1,5 +1,5 @@
 from django.contrib import admin
-from dairyapp.models import Vendor, MilkCategory, VendorLedger, Profile, CustomerMilkCategory
+from dairyapp.models import Vendor, MilkCategory, VendorLedger, Profile, CustomerMilkCategory, Customerledger
 from django.contrib.auth.models import User
 
 #********************************************#
@@ -39,3 +39,8 @@ class CustomerMilkCategory_Admin(admin.ModelAdmin):
     list_display = ['fullname','animalname','milkprice']
     list_filter = ['animalname', 'milkprice']
 admin.site.register(CustomerMilkCategory,CustomerMilkCategory_Admin)
+
+
+class Customerledger_Admin(admin.ModelAdmin):
+    list_display = ['related_customer','date','quantity','price','total']
+admin.site.register(Customerledger,Customerledger_Admin)

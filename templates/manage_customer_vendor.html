@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load templatetags %}
+
+{% block content %}
+<style media="screen">
+.search{
+    border-radius: 25px;
+    text-align: center;
+    height: 50px;
+
+
+
+
+  }
+</style>
+
+  <form method="POST">
+    {% csrf_token %}
+      <input class="form-control mr-sm-2 search" type="search" name="sdata" placeholder="Enter Customer or Vendor Name" aria-label="Search">
+    </form >
+
+
+{% endblock %}

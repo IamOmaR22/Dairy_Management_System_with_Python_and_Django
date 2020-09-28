@@ -7,6 +7,8 @@ from dairyapp.forms import contactForm, SignUpForm, AddVendorForm, MilkCategoryF
 from django.core.mail import send_mail
 from django.conf import settings
 from dairyapp import models
+from django.template.loader import get_template
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -43,8 +45,8 @@ def signup(request):
             # user = authenticate(username=username, password=raw_password)
             # login(request, user)
 
-            # return redirect('addcustomer')
-            return redirect('home')
+            return redirect('addcustomer')
+            # return redirect('home')
     else:
         form = SignUpForm()
     return render(request, 'registration/signup.html', {'form': form})
@@ -53,7 +55,7 @@ def signup(request):
 #       ||  Vendors Views Started  ||       #
 #*******************************************#
 
-# @login_required
+@login_required
 def addvendor(request):
     if request.method == 'POST':
         form = AddVendorForm(request.POST)
@@ -67,13 +69,13 @@ def addvendor(request):
 
             v = models.Vendor(managername=managername,vendorname=vendorname,address=address,vendorcontact=vendorcontact,status=status)
             v.save()
-            # return redirect('add_milk_category') # milkcategoryform.html
-            return redirect('home')
+            return redirect('add_milk_category') # milkcategoryform.html
+            # return redirect('home')
     else:
         form = AddVendorForm()
         return render(request, 'vendor/addvendor.html', {'form':form})
 
-# @login_required
+@login_required
 def add_milk_category(request):
     if request.method == 'POST':
         form = MilkCategoryForm(request.POST)
@@ -85,7 +87,7 @@ def add_milk_category(request):
         return render(request,'vendor/milkcategoryform.html', {'form':form})
 
 # All vendors dashboard
-# @login_required
+@login_required
 def allvendor(request):
     manager=''
     if User.is_authenticated:
@@ -97,7 +99,7 @@ def allvendor(request):
 
 
 # Individual vendor dashboard
-# @login_required
+@login_required
 def ledger(request,pk):
          ledgerform = VendorledgerForm()
          #data = VendorLedger.objects.filter(managername=request.user.username)
@@ -141,12 +143,58 @@ def ledger(request,pk):
          })
 
 
+def ledger_save(request):
+    if request.method == 'POST':
+        print(request.POST.dict())
+        print(request.POST.get("milktype", ""))
+
+        vendor_pk = request.POST.get("vendor", None)
+        date = request.POST.get("date",None)
+        milkcategory_pk = request.POST.get("milktype", None)
+        quantity = request.POST.get("quantity", None)
+
+        related_vendor = models.Vendor.objects.get(pk=vendor_pk)
+        related_milkcategory = models.MilkCategory.objects.get(pk=milkcategory_pk)
+        price = related_milkcategory.milkprice
+        total = float(quantity) * float(price)
+        path = request.path
+        pathstr = str(path)
+
+        #alltotal = models.vendorledger.objects.filter(pk=pk)
+        #print(related_vendor,date, related_milkcategory, price, quantity, total)
+
+        g = models.vendorledger(
+            related_vendor=related_vendor,
+            date = date,
+            related_milkcategory=related_milkcategory,
+            price=price,
+            quantity=quantity,
+            total=total
+            )
+
+        g.save()
+        current_url = "/ledger/" + str(vendor_pk) + "/"
+        return redirect(current_url)
+
+
+def ledger_delete(request):
+    if request.method == 'POST':
+        #print(request.POST.get('ledger_pk'))
+        pk = request.POST.get('ledger_pk')
+        ledger_entry = models.vendorledger.objects.get(pk=pk)
+        vendor_pk = ledger_entry.related_vendor.pk
+        ledger_entry.delete()
+        current_url = "/ledger/" + str(vendor_pk) + "/"
+    return redirect(current_url)
+
+
+
 #***************************************************#
 #       ||  Customer Views (User) Started  ||       #
 #***************************************************#
 
 # Add Customer
-# @login_required
+@login_required
 def addcustomer(request):
     if request.method == 'POST':
         form = ProfileForm(request.POST)
@@ -214,3 +262,65 @@ def customer_ledger(request,pk):
         "customer_ledger_info":customer_ledger_info,
         "alltotal":alltotal,
     })
+
+
+def customer_ledger_save(request):
+    if request.method == 'POST':
+        print(request.POST.dict())
+        customer_pk = request.POST.get("customer", None)
+
+        date = request.POST.get("date",None)
+        milk_pk = request.POST.get("milktype", None)
+        quantity = request.POST.get("quantity", None)
+
+        related_customer  = models.User.objects.get(pk=customer_pk)
+        related_milk_category = models.CustomerMilkCategory.objects.get(pk=milk_pk)
+        price = related_milk_category.milkprice
+        total = float(quantity) * float(price)
+
+        data = models.Customerledger(
+                related_customer = related_customer,
+                date = date,
+                related_milk_category = related_milk_category,
+                quantity = quantity,
+                price = price,
+                total = total,
+                )
+        data.save()
+
+        current_url = "/customer_ledger/" + str(customer_pk) + "/"
+
+        return redirect(current_url)
+        
+
+def customer_ledger_delete(request):
+    if request.method == 'POST':
+        pk = request.POST.get('customer_pk')
+        customer_ledger_entry = models.Customerledger.objects.get(pk=pk)
+        customer_ledger_entry.delete()
+        customer_pk = customer_ledger_entry.related_customer.pk
+        current_url = "/customer_ledger/" + str(customer_pk) + "/"
+        return redirect(current_url)
+
+
+@login_required
+def allcustomer(request):
+    customerinfo = models.Profile.objects.all()
+    return render(request,'Customers/Customer_detail.html',{'customerinfo':customerinfo})
+
+# def password_reset(request):
+#     if request.method == 'POST':
+#         form = password_reset_form(request.POST)
+#         if form.is_valid():
+#             subject = "Password Reset"
+#             to_email = form.cleaned_data['email']
+#             receivers_list = [to_email,]
+#             message =
+#
+#             emailsender = settings.EMAIL_HOST_USER
+#             send_mail(subject, message, emailsender, receivers_list, fail_silently=False)
+#             print("To Email: ",to_email)
+#             return redirect('home')
+#     else:
+#         form = password_reset_form()
+#         return render(request,'registration/password_reset_form.html',{'form':form})

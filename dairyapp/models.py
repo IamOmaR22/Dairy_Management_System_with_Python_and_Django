@@ -47,3 +47,27 @@ class VendorLedger(models.Model):
 
     class Meta:
         ordering = ('-date',)
+
+
+#****************************************************#
+#       ||  Customer Models (User) Started  ||       #
+#****************************************************#
+
+class Profile(models.Model):
+    CHOICES1 = (
+        ('Admin','Admin'),
+        ('Customer','Customer'),
+        ('Manager','Manager'),
+        )
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user_type = models.CharField(max_length=20, null=True, blank=False,choices=CHOICES1)
+    contact_number = models.CharField(max_length=20,null=True,unique=True)
+    joining_data = models.DateField(auto_now_add=False)
+    address = models.CharField(max_length=500,null=True)
+
+
+    class Meta:
+        ordering = ('-user_type',)
+
+    def __str__(self):
+        return f"{self.user.first_name} {self.user.last_name}"

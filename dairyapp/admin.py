@@ -1,5 +1,5 @@
 from django.contrib import admin
-from dairyapp.models import Vendor, MilkCategory, VendorLedger
+from dairyapp.models import Vendor, MilkCategory, VendorLedger, Profile
 from django.contrib.auth.models import User
 
 #********************************************#
@@ -24,3 +24,12 @@ class VendorLedger_Admin(admin.ModelAdmin):
 #    readonly_fields = ["price"]
 
 admin.site.register(VendorLedger, VendorLedger_Admin)
+
+
+#**********************************************#
+#       ||  Customer Classes Started  ||       #
+#**********************************************#
+
+class Profile_Admin(admin.ModelAdmin):
+    list_display =['__str__','user_type','contact_number','address']
+admin.site.register(Profile, Profile_Admin)

@@ -11,4 +11,7 @@ urlpatterns = [
         path('add_milk_category/',views.add_milk_category, name='add_milk_category'),
         path('allvendor/', views.allvendor, name='allvendor'),  # All vendors dashboard
         path('ledger/<int:pk>/', views.ledger, name='ledger'),  # Individual vendor dashboard
+
+        # Customer Started
+        path('addcustomer/',views.addcustomer,name='addcustomer'),
 ]

@@ -2,7 +2,7 @@ from django import forms
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from dairyapp.models import Vendor, MilkCategory
+from dairyapp.models import Vendor, MilkCategory, Profile
 import datetime
 
 
@@ -71,3 +71,15 @@ class VendorledgerForm(forms.Form):
     #Manager_Name = forms.CharField(label='',required=True, max_length=200)
     Day = forms.ChoiceField(label='',choices=CHOICES2)
     Quantity = forms.CharField(label='',required=False)
+
+
+
+
+#***************************************************#
+#       ||  Customer Forms (User) Started  ||       #
+#***************************************************#
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('user','user_type','contact_number','joining_data','address')

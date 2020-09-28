@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
-from dairyapp.forms import contactForm, SignUpForm, AddVendorForm, MilkCategoryForm, VendorledgerForm
+from dairyapp.forms import contactForm, SignUpForm, AddVendorForm, MilkCategoryForm, VendorledgerForm, ProfileForm
 from django.core.mail import send_mail
 from django.conf import settings
 from dairyapp import models
@@ -138,4 +138,22 @@ def ledger(request,pk):
              "milk_list":milk_list,
              "day_list":day_list,
              "alltotal":alltotal,
-             })
+         })
+
+
+#***************************************************#
+#       ||  Customer Views (User) Started  ||       #
+#***************************************************#
+
+# @login_required
+def addcustomer(request):
+    if request.method == 'POST':
+        form = ProfileForm(request.POST)
+        print("i am in addcustomer upper")
+        if form.is_valid():
+            print("i am in addcustomer")
+            form.save()
+            return redirect('customer_milk_category')
+    else:
+        form = ProfileForm()
+    return render(request,'Customers/Add_Customer.html',{'form':form})

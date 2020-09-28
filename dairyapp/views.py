@@ -170,3 +170,47 @@ def customer_milk_category(request):
     else:
         form = CustomerMilkCategoryForm()
     return render(request,'Customers/customer_milk_category.html',{'form':form})
+
+
+# Customer_page
+def Customer_page(request):
+    print("Username=",request.user)
+    print("Userpk=",request.user.pk)
+    customer = request.user
+    customer_info = models.Customerledger.objects.filter(related_customer = customer)
+
+    alltotal = 0.0
+    for i in customer_info:
+        alltotal = alltotal+float(i.total)
+    print(alltotal)
+
+    for data in customer_info:
+        print("Customer Name: ",data.related_customer)
+        print("joining Date: ",data.date)
+        print("Quantity: ",data.price)
+        print("Total: ",data.total)
+
+    return render(request,'Customers/customer.html',{'customer_info':customer_info,'alltotal':alltotal})
+
+
+# Customer ledger
+def customer_ledger(request,pk):
+    customer_obj = get_object_or_404(User,pk=pk)
+    cus_user_info = models.Profile.objects.filter(user=customer_obj)
+    customer_ledger_info = models.Customerledger.objects.filter(related_customer = customer_obj)
+    milktypes = models.CustomerMilkCategory.objects.filter(related_customer = customer_obj)
+    milk_list = [(milk.animalname +"-"+ str(milk.milkprice), milk.pk) for milk in milktypes]
+
+    customer_full_name = f"{customer_obj.first_name} {customer_obj.last_name}"
+    alltotal = 0.0
+    for i in customer_ledger_info:
+        alltotal = alltotal+float(i.total)
+    print(alltotal)
+
+    return render(request,'Customers/customer_ledger.html',{
+        "customer_full_name":customer_full_name,
+        "milk_list":milk_list,
+        "customer_obj":customer_obj,
+        "customer_ledger_info":customer_ledger_info,
+        "alltotal":alltotal,
+    })

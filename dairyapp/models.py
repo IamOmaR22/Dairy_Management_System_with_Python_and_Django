@@ -89,3 +89,14 @@ class CustomerMilkCategory(models.Model):
 
     def __str__(self):
         return f"{self.related_customer}: ({self.animalname}, ₹ {self.milkprice})"
+
+
+# Individual Customer dashboard
+class Customerledger(models.Model):
+    related_milk_category = models.ForeignKey(CustomerMilkCategory, related_name="Customerledger", on_delete=models.CASCADE, null=True)
+    related_customer = models.ForeignKey(User, related_name='Customerledger', on_delete=models.CASCADE, null=True)
+    date = models.CharField(max_length=1000000,db_index=True)
+    price = models.FloatField(max_length=1000000,db_index=True,default=0.0)
+    quantity = models.FloatField(max_length=1000000,db_index=True,default=0.0)
+    total = models.FloatField(max_length=1000000,db_index=True,default=0.0)
+

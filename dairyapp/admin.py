@@ -1,5 +1,5 @@
 from django.contrib import admin
-from dairyapp.models import Vendor
+from dairyapp.models import Vendor, MilkCategory, VendorLedger
 from django.contrib.auth.models import User
 
 #********************************************#
@@ -9,3 +9,18 @@ class Vendor_Admin(admin.ModelAdmin):
     list_display = ['vendorname','managername','joiningdate', 'vendorcontact']
 
 admin.site.register(Vendor, Vendor_Admin)
+
+
+class MilkCategory_Admin(admin.ModelAdmin):
+    list_display = ['animalname','milkprice','related_vendor']
+    list_filter = ['animalname', 'milkprice']
+
+admin.site.register(MilkCategory, MilkCategory_Admin)
+
+
+# Individual vendor dashboard
+class VendorLedger_Admin(admin.ModelAdmin):
+    list_display = ['related_vendor','related_milkcategory','date','price','quantity','total']
+#    readonly_fields = ["price"]
+
+admin.site.register(VendorLedger, VendorLedger_Admin)

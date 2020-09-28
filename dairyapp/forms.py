@@ -2,7 +2,7 @@ from django import forms
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from dairyapp.models import Vendor
+from dairyapp.models import Vendor, MilkCategory
 import datetime
 
 
@@ -23,6 +23,10 @@ class SignUpForm(UserCreationForm):
         fields = ('username', 'first_name', 'last_name','email', 'password1', 'password2')
 
 
+#*******************************************#
+#       ||  Vendors Forms Started  ||       #
+#*******************************************#
+
 # Add Vendor
 class AddVendorForm(forms.Form):
     CHOICES = (
@@ -36,3 +40,34 @@ class AddVendorForm(forms.Form):
     Address = forms.CharField(required=True)
     Vendor_Contact = forms.CharField(required=True)
     Status =  forms.BooleanField(required=False,initial=True)
+
+# Vendor MilkCategory
+class MilkCategoryForm(forms.ModelForm):
+    class Meta:
+        model = MilkCategory
+        fields = ('animalname', 'milkprice','related_vendor')
+
+# Individual vendor dashboard
+class VendorledgerForm(forms.Form):
+    # def __init__(self,*arg,**kwarg):
+    #     print(arg)
+    #     print(**kwarg)
+    CHOICES1 = (
+        ('Cow','Cow'),
+        ('Buffaloe','Buffaloe'),
+        ('Others','Others'),
+    )
+    CHOICES2 = (
+        ('Sunday','Sunday'),
+        ('Monday','Monday'),
+        ('Tuesday','Tuesday'),
+        ('Wednesday','Wednesday'),
+        ('Thursday','Thursday'),
+        ('Friday','Friday'),
+        ('Saturday','Saturday'),
+    )
+    Milk_Category = forms.ChoiceField(label='',choices=CHOICES1)
+    #Vendor_Name = forms.CharField(label='',required=True, max_length=200)
+    #Manager_Name = forms.CharField(label='',required=True, max_length=200)
+    Day = forms.ChoiceField(label='',choices=CHOICES2)
+    Quantity = forms.CharField(label='',required=False)

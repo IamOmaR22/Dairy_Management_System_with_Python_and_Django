@@ -14,4 +14,5 @@ urlpatterns = [
 
         # Customer Started
         path('addcustomer/',views.addcustomer,name='addcustomer'),
+        path('customer_milk_category/',views.customer_milk_category,name='customer_milk_category'),
 ]

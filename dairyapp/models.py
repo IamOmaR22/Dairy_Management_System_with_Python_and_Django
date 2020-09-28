@@ -53,6 +53,7 @@ class VendorLedger(models.Model):
 #       ||  Customer Models (User) Started  ||       #
 #****************************************************#
 
+# Add Customer
 class Profile(models.Model):
     CHOICES1 = (
         ('Admin','Admin'),
@@ -71,3 +72,20 @@ class Profile(models.Model):
 
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name}"
+
+# Customer MilkCategory
+class CustomerMilkCategory(models.Model):
+    CHOICES1 = (
+        ('Cow','Cow'),
+        ('Buffaloe','Buffalo'),#buffaloes
+        ('Others','Others'),
+    )
+    animalname= models.CharField(max_length=200,choices=CHOICES1)
+    milkprice = models.FloatField(max_length=200, db_index=True)
+    related_customer = models.ForeignKey(User, related_name='CustomerMilkCategory', on_delete=models.CASCADE, null=True)
+
+    def fullname(self):
+        return f"{self.related_customer.first_name} {self.related_customer.last_name}"
+
+    def __str__(self):
+        return f"{self.related_customer}: ({self.animalname}, ₹ {self.milkprice})"

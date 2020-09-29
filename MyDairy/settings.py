@@ -31,7 +31,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '6ce2hkc=a+arbl92!wv18!h^$6^%xzoc*fkw0q9h1jscx(^rn#'
+SECRET_KEY = '6ce2hkc=a+arbl92!omarwv18!h^$6^%xzoc*fkfarukw0q9h1jscx(^rn#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -125,7 +125,7 @@ TIME_ZONE = 'Asia/Dhaka'
 
 USE_I18N = True
 
-USE_L10N = True
+USE_L10N = False # Turn True to False
 
 USE_TZ = True
 

@@ -46,15 +46,11 @@
     .menu-text-size {
       font-size: 14px;
 
-        {
-        % comment %
-      }
+      {% comment %}
 
-      padding:10px;
+      padding: 10px;
 
-        {
-        % endcomment %
-      }
+      {% endcomment %}
     }
 
     .navbar {
@@ -66,7 +62,7 @@
 
     .dropdown:hover .dropdown-menu {
       display: block;
-      margin-top: 0; // remove the gap so it doesn't close
+      margin-top: 0; /* remove the gap so it doesn't close */
     }
 
     .logo-image {
@@ -149,49 +145,46 @@
               <a class="nav-link" href="{% url 'home' %}">Home</a>
             </li>
             {% if user.profile.user_type == 'Customer' %}
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'Customer_page' %}">{{user.first_name}}_{{user.last_name}}</a>
-            </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'Customer_page' %}">{{user.first_name}}_{{user.last_name}}</a>
+              </li>
             {% endif %}
             &nbsp;&nbsp;&nbsp;
-            {% if user.is_authenticated and user.profile.user_type == 'Manager'%}
 
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                Venders
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item " href="{% url 'addvendor' %}"><i class="fas fa-plus"></i> <span
-                    class="menu-text-size">&nbsp;&nbsp;Vendor</span></a>
-                <a class="dropdown-item" href="{% url 'add_milk_category' %}"><i class="fas fa-plus"></i><span
-                    class="menu-text-size">&nbsp;&nbsp; Milk Category</span></a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{% url 'allvendor' %}"><i class="fa fa-user"></i><span
-                    class="menu-text-size">&nbsp;&nbsp; All Vendors</span></a>
-              </div>
-            </li>
-            &nbsp;&nbsp;&nbsp;
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                Customers
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{% url 'signup' %}"><i class="fas fa-plus"></i><span
-                    class="menu-text-size">&nbsp;&nbsp; Customers</span></a>
-                <a class="dropdown-item" href="{% url 'customer_milk_category' %}"><i class="fas fa-plus"></i><span
-                    class="menu-text-size">&nbsp;&nbsp; Milk Category</span></a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{% url 'allcustomer' %}"> <i class="fa fa-user"></i><span
-                    class="menu-text-size">&nbsp;&nbsp; All Customers</span></a>
+            {% if user.is_authenticated and user.profile.user_type == 'Manager' %}
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  Venders
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item " href="{% url 'addvendor' %}"><i class="fas fa-plus"></i> <span
+                      class="menu-text-size">&nbsp;&nbsp;Vendor</span></a>
+                  <a class="dropdown-item" href="{% url 'add_milk_category' %}"><i class="fas fa-plus"></i><span
+                      class="menu-text-size">&nbsp;&nbsp; Milk Category</span></a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="{% url 'allvendor' %}"><i class="fa fa-user"></i><span
+                      class="menu-text-size">&nbsp;&nbsp; All Vendors</span></a>
+                </div>
+              </li>
+              &nbsp;&nbsp;&nbsp;
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  Customers
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="{% url 'signup' %}"><i class="fas fa-plus"></i><span
+                      class="menu-text-size">&nbsp;&nbsp; Customers</span></a>
+                  <a class="dropdown-item" href="{% url 'customer_milk_category' %}"><i class="fas fa-plus"></i><span
+                      class="menu-text-size">&nbsp;&nbsp; Milk Category</span></a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="{% url 'allcustomer' %}"> <i class="fa fa-user"></i><span
+                      class="menu-text-size">&nbsp;&nbsp; All Customers</span></a>
 
-              </div>
-            </li>
-
+                </div>
+              </li>
             {% endif %}
-
-
 
           </ul>
 

@@ -101,46 +101,47 @@ def allvendor(request):
 # Individual vendor dashboard
 @login_required
 def ledger(request,pk):
-         ledgerform = VendorledgerForm()
-         #data = VendorLedger.objects.filter(managername=request.user.username)
-         vendor_obj = get_object_or_404(models.Vendor,pk=pk)
-        #  pkvalue = vendor_obj.pk
-         #print(pkvalue)
 
-        #  url1 = request.path
-         #print(url1)
+    ledgerform = VendorledgerForm()
+    # data = VendorLedger.objects.filter(managername=request.user.username)
+    vendor_obj = get_object_or_404(models.Vendor,pk=pk)
+    # pkvalue = vendor_obj.pk
+    # print(pkvalue)
 
-         ledgerdata = models.VendorLedger.objects.filter(related_vendor=vendor_obj)
-         alltotal=0.0
-         #print(ledgerdata[0].total)
-         for alto in ledgerdata:
-             alltotal = alltotal+float(alto.total)
+    # url1 = request.path
+    # print(url1)
 
-         print(alltotal)
-         #print(vendor_obj)
+    ledgerdata = models.VendorLedger.objects.filter(related_vendor=vendor_obj)
+    alltotal=0.0
+    # print(ledgerdata[0].total)
+    for alto in ledgerdata:
+        alltotal = alltotal+float(alto.total)
 
-         #print(ledgerdata)
-         milks = models.MilkCategory.objects.filter(related_vendor=vendor_obj)
+    print(alltotal)
+    # print(vendor_obj)
 
-         #for milk in milks:
-         #    print(milk.animalname + "-----" +milk.milkprice)
+    # print(ledgerdata)
+    milks = models.MilkCategory.objects.filter(related_vendor=vendor_obj)
 
-         milk_list = [(milk.animalname +"-"+ str(milk.milkprice), milk.pk) for milk in milks]
-         print(milk_list)
+    # for milk in milks:
+    # print(milk.animalname + "-----" +milk.milkprice)
 
-         # print(tuple(milk_list))
+    milk_list = [(milk.animalname +"-"+ str(milk.milkprice), milk.pk) for milk in milks]
+    print(milk_list)
+
+    # print(tuple(milk_list))
 
 
-         day_list = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
-         return render(request, 'vendor/vendorledger.html',{
-             "vendor_obj":vendor_obj,
-             "ledgerdata":ledgerdata,
-             "ledgerform":ledgerform,
-             "num_range":range(6),
-             "milk_list":milk_list,
-             "day_list":day_list,
-             "alltotal":alltotal,
-         })
+    day_list = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
+    return render(request, 'vendor/vendorledger.html',{
+        "vendor_obj":vendor_obj,
+        "ledgerdata":ledgerdata,
+        "ledgerform":ledgerform,
+        "num_range":range(6),
+        "milk_list":milk_list,
+        "day_list":day_list,
+        "alltotal":alltotal,
+    })
 
 
 def ledger_save(request):
@@ -160,10 +161,10 @@ def ledger_save(request):
         path = request.path
         pathstr = str(path)
 
-        #alltotal = models.vendorledger.objects.filter(pk=pk)
+        #alltotal = models.VendorLedger.objects.filter(pk=pk)
         #print(related_vendor,date, related_milkcategory, price, quantity, total)
 
-        g = models.vendorledger(
+        g = models.VendorLedger(
             related_vendor=related_vendor,
             date = date,
             related_milkcategory=related_milkcategory,
@@ -181,7 +182,7 @@ def ledger_delete(request):
     if request.method == 'POST':
         #print(request.POST.get('ledger_pk'))
         pk = request.POST.get('ledger_pk')
-        ledger_entry = models.vendorledger.objects.get(pk=pk)
+        ledger_entry = models.VendorLedger.objects.get(pk=pk)
         vendor_pk = ledger_entry.related_vendor.pk
         ledger_entry.delete()
         current_url = "/ledger/" + str(vendor_pk) + "/"

@@ -58,7 +58,7 @@
               <div class="col">
                 <select class="form-control" id="milktype" name="milktype">
                   {% for milk, milk_pk in milk_list %}
-                  <option value="{{milk_pk}}"> {{milk}} </option>
+                    <option value="{{milk_pk}}"> {{milk}} </option>
                   {% endfor %}
                 </select>
               </div>
@@ -134,6 +134,7 @@
     </tbody>
   </table>
 </div>
+
 <!-- script for datepicker -->
 <script>
   $(function () {

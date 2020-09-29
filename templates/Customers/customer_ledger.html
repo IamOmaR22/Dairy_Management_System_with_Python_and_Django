@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+
 {% load templatetags %}
 
 
@@ -22,7 +23,8 @@
     </thead>
 
     <tbody>
-      <form action="\customer_ledger_save\" method="POST">{% csrf_token %}
+      <form action="\customer_ledger_save\" method="POST">
+        {% csrf_token %}
         <tr>
           <td scpoe="col">
             <div class="form-row">
@@ -47,7 +49,7 @@
               <div class="col">
                 <select class="form-control" id="milktype" name="milktype">
                   {% for milk, milk_pk in milk_list %}
-                  <option value="{{ milk_pk }}"> {{milk}} </option>
+                    <option value="{{ milk_pk }}"> {{milk}} </option>
                   {% endfor %}
                 </select>
               </div>
@@ -106,7 +108,8 @@
 
 
         <td>
-          <form action="{% url 'customer_ledger_delete' %}" method="POST">{% csrf_token %}
+          <form action="{% url 'customer_ledger_delete' %}" method="POST">
+            {% csrf_token %}
             <button class="btn btn-info form-control" type="submit" name="customer_pk"
               value="{{ledger.pk}}">Delete</button>
           </form>

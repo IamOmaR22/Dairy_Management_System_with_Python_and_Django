@@ -1,15 +1,7 @@
-from django.db import models
-
 import datetime
+from django.db import models
 from django.contrib.auth.models import User
 
-# Create your models here.
-
-#*******************************************#
-#       ||  Vendor Models Started  ||       #
-#*******************************************#
-
-# Add Vendor
 class Vendor(models.Model):
     managername = models.CharField(max_length=200)
     vendorname = models.CharField(max_length=200,db_index=True,unique=True)
@@ -21,7 +13,7 @@ class Vendor(models.Model):
     def __str__(self):
         return self.vendorname
 
-# Vendor MilkCategory
+#Vendor MilkCategory
 class MilkCategory(models.Model):
     CHOICES1 = (
         ('Cow','Cow'),
@@ -36,8 +28,8 @@ class MilkCategory(models.Model):
     def __str__(self):
         return self.animalname +"----- ₹ " + str(self.milkprice)
 
-# Individual vendor dashboard
-class VendorLedger(models.Model):
+
+class vendorledger(models.Model):
     related_vendor = models.ForeignKey(Vendor, related_name='vendorledger', on_delete=models.CASCADE,null=True)
     related_milkcategory = models.ForeignKey(MilkCategory, related_name='vendorledger', on_delete=models.CASCADE, null=True)
     date = models.CharField(max_length=1000000,db_index=True)
@@ -48,19 +40,17 @@ class VendorLedger(models.Model):
     class Meta:
         ordering = ('-date',)
 
+#**************************************************************************************************************
+#Customer Models (User)
+#**************************************************************************************************************
 
-#****************************************************#
-#       ||  Customer Models (User) Started  ||       #
-#****************************************************#
-
-# Add Customer
 class Profile(models.Model):
     CHOICES1 = (
         ('Admin','Admin'),
         ('Customer','Customer'),
         ('Manager','Manager'),
         )
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User,on_delete=models.CASCADE)
     user_type = models.CharField(max_length=20, null=True, blank=False,choices=CHOICES1)
     contact_number = models.CharField(max_length=20,null=True,unique=True)
     joining_data = models.DateField(auto_now_add=False)
@@ -73,7 +63,6 @@ class Profile(models.Model):
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name}"
 
-# Customer MilkCategory
 class CustomerMilkCategory(models.Model):
     CHOICES1 = (
         ('Cow','Cow'),
@@ -84,6 +73,8 @@ class CustomerMilkCategory(models.Model):
     milkprice = models.FloatField(max_length=200, db_index=True)
     related_customer = models.ForeignKey(User, related_name='CustomerMilkCategory', on_delete=models.CASCADE, null=True)
 
+
+
     def fullname(self):
         return f"{self.related_customer.first_name} {self.related_customer.last_name}"
 
@@ -91,7 +82,6 @@ class CustomerMilkCategory(models.Model):
         return f"{self.related_customer}: ({self.animalname}, ₹ {self.milkprice})"
 
 
-# Individual Customer dashboard
 class Customerledger(models.Model):
     related_milk_category = models.ForeignKey(CustomerMilkCategory, related_name="Customerledger", on_delete=models.CASCADE, null=True)
     related_customer = models.ForeignKey(User, related_name='Customerledger', on_delete=models.CASCADE, null=True)
@@ -99,4 +89,3 @@ class Customerledger(models.Model):
     price = models.FloatField(max_length=1000000,db_index=True,default=0.0)
     quantity = models.FloatField(max_length=1000000,db_index=True,default=0.0)
     total = models.FloatField(max_length=1000000,db_index=True,default=0.0)
-

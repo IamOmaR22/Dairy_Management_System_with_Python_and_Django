@@ -1,11 +1,16 @@
 from django import forms
 from django.shortcuts import get_object_or_404
-from dairyapp.models import MilkCategory, Vendor, Profile, CustomerMilkCategory,Customerledger
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from dairyapp.models import Vendor, MilkCategory, Profile, CustomerMilkCategory,Customerledger
 import datetime
 
 
+class contactForm(forms.Form):
+    name = forms.CharField(required=True, max_length=100)
+    subject = forms.CharField(required=True, max_length=100)
+    email = forms.EmailField(required=True)
+    message = forms.CharField(required=True,widget=forms.Textarea(attrs={'class': 'form-control','cols':20, 'rows':3 }))
 
 
 class SignUpForm(UserCreationForm):
@@ -18,21 +23,12 @@ class SignUpForm(UserCreationForm):
         fields = ('username', 'first_name', 'last_name','email', 'password1', 'password2')
 
 
-class ProfileForm(forms.ModelForm):
-    class Meta:
-        model = Profile
-        fields = ('user','user_type','contact_number','joining_data','address')
 
-class MilkCategoryForm(forms.ModelForm):
-    class Meta:
-        model = MilkCategory
-        fields = ('animalname', 'milkprice','related_vendor')
+#*******************************************#
+#       ||  Vendors Forms Started  ||       #
+#*******************************************#
 
-class CustomerMilkCategoryForm(forms.ModelForm):
-    class Meta:
-        model = CustomerMilkCategory
-        fields = ('animalname','milkprice','related_customer')
-
+# Add Vendor
 class AddVendorForm(forms.Form):
     CHOICES = (
         ('Cow','Cow'),
@@ -47,6 +43,14 @@ class AddVendorForm(forms.Form):
     Status =  forms.BooleanField(required=False,initial=True)
 
 
+# Vendor MilkCategory
+class MilkCategoryForm(forms.ModelForm):
+    class Meta:
+        model = MilkCategory
+        fields = ('animalname', 'milkprice','related_vendor')
+
+
+# Individual vendor dashboard
 class vendorledgerForm(forms.Form):
     # def __init__(self,*arg,**kwarg):
     #     print(arg)
@@ -71,8 +75,21 @@ class vendorledgerForm(forms.Form):
     Day = forms.ChoiceField(label='',choices=CHOICES2)
     Quantity = forms.CharField(label='',required=False)
 
-class contactForm(forms.Form):
-    name = forms.CharField(required=True, max_length=100)
-    subject = forms.CharField(required=True, max_length=100)
-    email = forms.EmailField(required=True)
-    message = forms.CharField(required=True,widget=forms.Textarea(attrs={'class': 'form-control','cols':20, 'rows':3 }))
+
+
+#***************************************************#
+#       ||  Customer Forms (User) Started  ||       #
+#***************************************************#
+
+# Add Customer
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('user','user_type','contact_number','joining_data','address')
+
+
+# Customer MilkCategory
+class CustomerMilkCategoryForm(forms.ModelForm):
+    class Meta:
+        model = CustomerMilkCategory
+        fields = ('animalname','milkprice','related_customer')

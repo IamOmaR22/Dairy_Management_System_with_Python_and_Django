@@ -1,14 +1,14 @@
-from django.shortcuts import  redirect, render
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.decorators import login_required
 from dairyapp import models
 from django.shortcuts import get_object_or_404
-from dairyapp.forms import AddVendorForm,vendorledgerForm,MilkCategoryForm,ProfileForm,SignUpForm,CustomerMilkCategoryForm,contactForm
+from dairyapp.forms import contactForm, SignUpForm, AddVendorForm, MilkCategoryForm, vendorledgerForm, ProfileForm, CustomerMilkCategoryForm
 from django.template.loader import get_template
 from django.core.mail import send_mail
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 
 def home(request):
     title = ''
@@ -50,16 +50,12 @@ def signup(request):
     return render(request, 'registration/signup.html', {'form': form})
 
 
-@login_required
-def allvendor(request):
-    manager=''
-    if User.is_authenticated:
-        manager = request.user.username
-        #print(manager)
-        #Vendor.objects.all().delete()
-        vendor = models.Vendor.objects.filter(managername=manager)
-        return render(request, 'vendor/allvendor.html',{'vendor':vendor})
 
+#*******************************************#
+#       ||  Vendors Views Started  ||       #
+#*******************************************#
+
+# Add Vendor
 @login_required
 def addvendor(request):
     if request.method == 'POST':
@@ -79,51 +75,34 @@ def addvendor(request):
         form = AddVendorForm()
         return render(request, 'vendor/addvendor.html', {'form':form})
 
-#Customer_page
-def Customer_page(request):
-    print("Username=",request.user)
-    print("Userpk=",request.user.pk)
-    customer = request.user
-    customer_info = models.Customerledger.objects.filter(related_customer = customer)
 
-    alltotal = 0.0
-    for i in customer_info:
-        alltotal = alltotal+float(i.total)
-    print(alltotal)
-
-    for data in customer_info:
-        print("Customer Name: ",data.related_customer)
-        print("joining Date: ",data.date)
-        print("Quantity: ",data.price)
-        print("Total: ",data.total)
-
-    return render(request,'Customers/customer.html',{'customer_info':customer_info,'alltotal':alltotal})
+# Vendor MilkCategory
+@login_required
+def add_milk_category(request):
+    if request.method == 'POST':
+        form = MilkCategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('add_milk_category')
+    else:
+        form = MilkCategoryForm()
+        return render(request,'vendor/milkcategoryform.html',{'form':form})
 
 
-#Customerleder
-def customer_ledger(request,pk):
-    customer_obj = get_object_or_404(User,pk=pk)
-    cus_user_info = models.Profile.objects.filter(user=customer_obj)
-    customer_ledger_info = models.Customerledger.objects.filter(related_customer = customer_obj)
-    milktypes = models.CustomerMilkCategory.objects.filter(related_customer = customer_obj)
-    milk_list = [(milk.animalname +"-"+ str(milk.milkprice), milk.pk) for milk in milktypes]
-
-    customer_full_name = f"{customer_obj.first_name} {customer_obj.last_name}"
-    alltotal = 0.0
-    for i in customer_ledger_info:
-        alltotal = alltotal+float(i.total)
-    print(alltotal)
-
-    return render(request,'Customers/customer_ledger.html',{
-            "customer_full_name":customer_full_name,
-            "milk_list":milk_list,
-            "customer_obj":customer_obj,
-            "customer_ledger_info":customer_ledger_info,
-            "alltotal":alltotal,
-            })
+# All vendors dashboard
+@login_required
+def allvendor(request):
+    manager=''
+    if User.is_authenticated:
+        manager = request.user.username
+        #print(manager)
+        #Vendor.objects.all().delete()
+        vendor = models.Vendor.objects.filter(managername=manager)
+        return render(request, 'vendor/allvendor.html',{'vendor':vendor})
 
 
-#Vendorledger
+
+# Individual vendor dashboard
 @login_required
 def ledger(request,pk):
          ledgerform = vendorledgerForm()
@@ -168,33 +147,6 @@ def ledger(request,pk):
              })
 
 
-def customer_ledger_save(request):
-    if request.method == 'POST':
-        print(request.POST.dict())
-        customer_pk = request.POST.get("customer", None)
-
-        date = request.POST.get("date",None)
-        milk_pk = request.POST.get("milktype", None)
-        quantity = request.POST.get("quantity", None)
-
-        related_customer  = models.User.objects.get(pk=customer_pk)
-        related_milk_category = models.CustomerMilkCategory.objects.get(pk=milk_pk)
-        price = related_milk_category.milkprice
-        total = float(quantity) * float(price)
-
-        data = models.Customerledger(
-                related_customer = related_customer,
-                date = date,
-                related_milk_category = related_milk_category,
-                quantity = quantity,
-                price = price,
-                total = total,
-                )
-        data.save()
-
-        current_url = "/customer_ledger/" + str(customer_pk) + "/"
-
-        return redirect(current_url)
 
 def ledger_save(request):
     if request.method == 'POST':
@@ -229,16 +181,7 @@ def ledger_save(request):
         current_url = "/ledger/" + str(vendor_pk) + "/"
         return redirect(current_url)
 
-@login_required
-def add_milk_category(request):
-    if request.method == 'POST':
-        form = MilkCategoryForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('add_milk_category')
-    else:
-        form = MilkCategoryForm()
-        return render(request,'vendor/milkcategoryform.html',{'form':form})
+
 
 def ledger_delete(request):
     if request.method == 'POST':
@@ -251,15 +194,12 @@ def ledger_delete(request):
     return redirect(current_url)
 
 
-def customer_ledger_delete(request):
-    if request.method == 'POST':
-        pk = request.POST.get('customer_pk')
-        customer_ledger_entry = models.Customerledger.objects.get(pk=pk)
-        customer_ledger_entry.delete()
-        customer_pk = customer_ledger_entry.related_customer.pk
-        current_url = "/customer_ledger/" + str(customer_pk) + "/"
-        return redirect(current_url)
 
+#***************************************************#
+#       ||  Customer Views (User) Started  ||       #
+#***************************************************#
+
+# Add Customer
 @login_required
 def addcustomer(request):
     if request.method == 'POST':
@@ -272,6 +212,102 @@ def addcustomer(request):
     else:
         form = ProfileForm()
     return render(request,'Customers/Add_Customer.html',{'form':form})
+
+
+# Customer MilkCategory
+def customer_milk_category(request):
+    if request.method == 'POST':
+        form = CustomerMilkCategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = CustomerMilkCategoryForm()
+    return render(request,'Customers/customer_milk_category.html',{'form':form})
+
+
+# Customer_page
+def Customer_page(request):
+    print("Username=",request.user)
+    print("Userpk=",request.user.pk)
+    customer = request.user
+    customer_info = models.Customerledger.objects.filter(related_customer = customer)
+
+    alltotal = 0.0
+    for i in customer_info:
+        alltotal = alltotal+float(i.total)
+    print(alltotal)
+
+    for data in customer_info:
+        print("Customer Name: ",data.related_customer)
+        print("joining Date: ",data.date)
+        print("Quantity: ",data.price)
+        print("Total: ",data.total)
+
+    return render(request,'Customers/customer.html',{'customer_info':customer_info,'alltotal':alltotal})
+
+
+# Customer ledger
+def customer_ledger(request,pk):
+    customer_obj = get_object_or_404(User,pk=pk)
+    cus_user_info = models.Profile.objects.filter(user=customer_obj)
+    customer_ledger_info = models.Customerledger.objects.filter(related_customer = customer_obj)
+    milktypes = models.CustomerMilkCategory.objects.filter(related_customer = customer_obj)
+    milk_list = [(milk.animalname +"-"+ str(milk.milkprice), milk.pk) for milk in milktypes]
+
+    customer_full_name = f"{customer_obj.first_name} {customer_obj.last_name}"
+    alltotal = 0.0
+    for i in customer_ledger_info:
+        alltotal = alltotal+float(i.total)
+    print(alltotal)
+
+    return render(request,'Customers/customer_ledger.html',{
+            "customer_full_name":customer_full_name,
+            "milk_list":milk_list,
+            "customer_obj":customer_obj,
+            "customer_ledger_info":customer_ledger_info,
+            "alltotal":alltotal,
+            })
+
+
+def customer_ledger_save(request):
+    if request.method == 'POST':
+        print(request.POST.dict())
+        customer_pk = request.POST.get("customer", None)
+
+        date = request.POST.get("date",None)
+        milk_pk = request.POST.get("milktype", None)
+        quantity = request.POST.get("quantity", None)
+
+        related_customer  = models.User.objects.get(pk=customer_pk)
+        related_milk_category = models.CustomerMilkCategory.objects.get(pk=milk_pk)
+        price = related_milk_category.milkprice
+        total = float(quantity) * float(price)
+
+        data = models.Customerledger(
+                related_customer = related_customer,
+                date = date,
+                related_milk_category = related_milk_category,
+                quantity = quantity,
+                price = price,
+                total = total,
+                )
+        data.save()
+
+        current_url = "/customer_ledger/" + str(customer_pk) + "/"
+
+        return redirect(current_url)
+
+
+def customer_ledger_delete(request):
+    if request.method == 'POST':
+        pk = request.POST.get('customer_pk')
+        customer_ledger_entry = models.Customerledger.objects.get(pk=pk)
+        customer_ledger_entry.delete()
+        customer_pk = customer_ledger_entry.related_customer.pk
+        current_url = "/customer_ledger/" + str(customer_pk) + "/"
+        return redirect(current_url)
+
 
 @login_required
 def allcustomer(request):
@@ -295,12 +331,4 @@ def allcustomer(request):
 #         form = password_reset_form()
 #         return render(request,'registration/password_reset_form.html',{'form':form})
 
-def customer_milk_category(request):
-    if request.method == 'POST':
-        form = CustomerMilkCategoryForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('home')
-    else:
-        form = CustomerMilkCategoryForm()
-    return render(request,'Customers/customer_milk_category.html',{'form':form})
+

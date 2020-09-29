@@ -19,9 +19,9 @@ urlpatterns = [
         # Customer Started
         path('addcustomer/',views.addcustomer,name='addcustomer'),
         path('customer_milk_category/',views.customer_milk_category,name='customer_milk_category'),
-        path('Customer_page/',views.Customer_page,name='Customer_page'),
+        path('allcustomer/',views.allcustomer,name='allcustomer'),
         path('customer_ledger/<int:pk>/', views.customer_ledger, name='customer_ledger'),  # Individual Customer dashboard
         path('customer_ledger_save/', views.customer_ledger_save, name='customer_ledger_save'),
         path('customer_ledger_delete/',views.customer_ledger_delete,name='customer_ledger_delete'),
-        path('allcustomer/',views.allcustomer,name='allcustomer'),
+        path('Customer_page/',views.Customer_page,name='Customer_page'),
 ]

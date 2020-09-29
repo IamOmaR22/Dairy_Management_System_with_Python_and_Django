@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load templatetags %}
+
+{% block content %}
+ {% if user.is_authenticated and user.profile.user_type == 'Manager' %}
+ <div class="table-responsive">
+      <table class="table table-bordered table-striped ">
+
+
+          <thead id="theadthid">
+            <tr>
+                  <th scope="col">Customer Name</th>
+                  <th scope="col">Contact Number</th>
+                  <th scope="col">Address</th>
+                  <th scope="col">Email id</th>
+            </tr>
+          </thead>
+
+          <tbody id="tbodydata">
+          {% for data in customerinfo %}
+            {% if data.user_type == 'Customer' %}
+            <tr>
+            
+            <td> <a style="text-decoration:none;" href="{% url 'customer_ledger'  pk=data.user.pk %}" class="btn btn-link"><strong>{{ data.user.first_name}} {{data.user.last_name }}</strong></a></td>
+            <td>{{ data.contact_number}}</td>
+            <td>{{ data.address }}</td>
+            <td>{{ data.user.email}}</td>
+            </tr>
+            {% endif %}
+        {% endfor %}
+          </tbody>
+      </table>
+  </div>
+
+{% endif %}
+{% endblock %}

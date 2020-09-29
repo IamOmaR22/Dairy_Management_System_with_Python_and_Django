@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load templatetags %}
+
+
+{% block content %}
+
+
+<h2 class="vendor_name_heading"><strong>{{ customer_full_name }}</strong></h2>
+
+
+<div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+              <tr>
+                <th scope="col">Customer</th>
+                <th scope="col">Date</th>
+                <th scope="col">Milk Type</th>
+                <th scope="col">Quantity(Liter)</th>
+                <th scope="col">Save</th>
+              </tr>
+            </thead>
+
+        <tbody>
+          <form action="\customer_ledger_save\" method="POST">{% csrf_token %}
+              <tr>
+               <td scpoe="col">
+                 <div class="form-row">
+                   <div class="col">
+                     <select  class="form-control" id="customer" name="customer">
+                          <option value="{{ customer_obj.pk }}"> {{ customer_obj.first_name }} {{ customer_obj.last_name }} </option>
+                        </select>
+                        </div>
+                      </div>
+                      </td>
+
+                <td scpoe="col">
+                  <div class="form-row">
+                    <div class="col">
+                      <p><input class="form-control" type="text" name="date" id="datepicker"></p>
+                    </div>
+                  </div>
+                </td>
+                <td scpoe="col">
+                  <div class="form-row">
+                    <div class="col">
+                      <select  class="form-control" id="milktype" name="milktype">
+                        {% for milk, milk_pk in milk_list %}
+                        <option value="{{ milk_pk }}"> {{milk}} </option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                </td>
+                <td scpoe="col">
+                  <div class="form-row">
+                    <div class="col">
+                      <input type="name" class="form-control"  name="quantity" placeholder="0"  pattern="\d+">
+                    </div>
+                  </div>
+                </td>
+                <td scpoe="col">
+                  <div class="form-row">
+                    <div class="col">
+                      <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </form>
+
+
+            </tbody>
+        </table>
+    </div>
+
+
+
+  <div class="table-responsive">
+      <table class="table table-bordered table-striped ">
+
+
+        <thead id="theadthid">
+          <tr >
+                <th scope="col">No.</th>
+                <th scope="col">Date</th>
+                <th scope="col">Milk Category</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total</th>
+                <th scope="col">Delete</th>
+            </tr>
+        </thead>
+
+        <tbody id="tbodydata">
+          {% for ledger in customer_ledger_info %}
+
+          <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ ledger.date }}</td>
+            <td>{{ ledger.related_milk_category }}</td>
+            <td> ₹ {{ ledger.price }}</td>
+            <td> {{ ledger.quantity }} L</td>
+            <td>₹ {% multiply ledger.quantity ledger.price %} </td>
+
+
+            <td>
+              <form action="{% url 'customer_ledger_delete' %}" method="POST">{% csrf_token %}
+                <button class="btn btn-info form-control"type="submit" name="customer_pk" value="{{ledger.pk}}">Delete</button>
+                </form>
+                </td>
+          </tr>
+{% endfor %}
+<tr>
+<td colspan="4"></td>
+<td id="totalid"><strong>{{ alltotal }}</strong></td>
+</tr>
+          </tbody>
+      </table>
+  </div>
+<!-- Script for datepicker -->
+<!-- <script>
+$( function() {
+  $( "#datepicker" ).datepicker();
+  $( "#datepicker" ).datepicker("show");
+
+  // $( "#datepicker" ).datepicker("setDate","0");
+} );
+</script> -->
+<script>
+        $(function() {
+           $( "#datepicker" ).datepicker({dateFormat:"dd-mm-yy",});
+
+        });
+     </script>
+
+
+{% endblock %}

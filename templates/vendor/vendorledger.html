@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load templatetags %}
+
+
+{% block content %}
+
+
+<h2 class="vendor_name_heading"><strong>{{ vendor_obj }}</strong></h2>
+
+
+<div class="table-responsive">
+        <table class="table table-bordered">
+
+            <thead>
+              <tr>
+                    <th scope="col">Vendor</th>
+                    <th scop="col">Date</th>
+                    <th scope="col">Milk Type</th>
+                    <th scope="col">Quantity(Liter)</th>
+                    <th scope="col">Save</th>
+
+                </tr>
+            </thead>
+
+            <tbody>
+
+
+                  <form action="\ledger_save\" method="POST">
+                  {% csrf_token %}
+                    <tr>
+                      <td scpoe="col">
+                        <div class="form-row">
+                          <div class="col">
+                            <select  class="form-control" id="vendor" name="vendor">
+                                <option value="{{ vendor_obj.pk }}"> {{ vendor_obj }} </option>
+                              </select>
+                              </div>
+                            </div>
+                            </td>
+
+
+
+
+                      <td scpoe="col">
+                          <div class="form-row">
+                            <div class="col">
+                              <p><input class="form-control" type="text" name="date" id="datepicker"></p>
+                              <!-- <input class="form-control" name="date" type="date"> -->
+                              </div>
+                            </div>
+                          </td>
+
+
+                            <td scpoe="col">
+                              <div class="form-row">
+                                   <div class="col">
+                                      <select  class="form-control" id="milktype" name="milktype">
+                                          {% for milk, milk_pk in milk_list %}
+                                              <option value="{{milk_pk}}"> {{milk}} </option>
+                                          {% endfor %}
+                                        </select>
+                                      </div>
+                                    </div>
+                              </td>
+
+
+
+                              <td scpoe="col">
+                                <div class="form-row">
+                                    <div class="col">
+                                        <input type="name" class="form-control"  name="quantity" placeholder="0"  pattern="\d+">
+                                      </div>
+                                    </div>
+                                </td>
+
+                                <td scpoe="col">
+                                  <div class="form-row">
+                                      <div class="col">
+                                          <button type="submit" class="btn btn-primary">Save</button>
+                                        </div>
+                                      </div>
+                                  </td>
+                        </tr>
+                    </form>
+
+
+            </tbody>
+        </table>
+    </div>
+
+
+
+  <div class="table-responsive">
+      <table class="table table-bordered table-striped ">
+
+
+          <thead id="theadthid">
+            <tr >
+                  <th scope="col">No.</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Milk Category</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Total</th>
+                  <th scope="col">Delete</th>
+              </tr>
+          </thead>
+
+          <tbody id="tbodydata">
+
+
+{% for data in ledgerdata %}
+          <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ data.date }}</td>
+            <td>{{ data.related_milkcategory }}</td>
+            <td> ₹ {{ data.price }}</td>
+            <td>{{ data.quantity }} L</td>
+            <td> ₹ {% multiply data.quantity data.price %}</td>
+            <td>
+
+              <form action="{% url 'ledger_delete' %}" method="POST">{% csrf_token %}
+                <button class="btn btn-info form-control"type="submit" name="ledger_pk" value="{{data.pk}}">Delete</button>
+                </form>
+                </td>
+          </tr>
+{% endfor %}
+<tr>
+<td colspan="4"></td>
+<td id="totalid"><strong>{{ alltotal }}</strong></td>
+</tr>
+          </tbody>
+      </table>
+  </div>
+<!-- script for datepicker -->
+<script>
+$(function() {
+  $( "#datepicker" ).datepicker({dateFormat:"dd-mm-yy",});
+
+});
+</script>
+
+{% endblock %}

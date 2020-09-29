@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load templatetags %}
+
+{% block content %}
+<h2 class="vendor_name_heading"><strong>{{ user.first_name }} {{ user.last_name }}</strong></h2>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped ">
+
+
+      <thead id="theadthid">
+        <tr >
+
+              <th scope="col">Date</th>
+              <th scope="col">Milk Category</th>
+              <th scope="col">Price</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Total</th>
+
+          </tr>
+      </thead>
+
+      <tbody id="tbodydata">
+        {% for info in customer_info %}
+
+        <tr>
+
+          <td>{{ info.date }}</td>
+          <td>{{ info.related_milk_category }}</td>
+          <td> ₹ {{ info.price }}</td>
+          <td> {{ info.quantity }} L</td>
+          <td>₹ {% multiply info.quantity info.price %} </td>
+
+        </tr>
+{% endfor %}
+<tr>
+<td colspan="4"></td>
+<td id="totalid"><strong>{{ alltotal }}</strong></td>
+</tr>
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

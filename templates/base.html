@@ -53,6 +53,9 @@
         /* background-color: #FFFFFF; */
         background-color: #003542;
         /* box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); */
+        /* font-family: 'Russo One', sans-serif; */
+        /* font-weight: 500; */
+        /* font-family: 'Roboto Mono', monospace; */
   }
 
   .dropdown:hover .dropdown-menu{
@@ -88,11 +91,13 @@
   }
 
   .vendor_name_heading{
-    font-family: 'Dancing Script', cursive;
-    color:#800000;
+    /* font-family: 'Dancing Script', cursive; */
+    font-family: 'Roboto Mono', monospace;
+    /* color:#800000; */
+    color:#B20032;
     text-align:center;
     font-size:40px;
-    padding:7px;
+    padding: 7px;
   }
   tr{
     text-align:center;
@@ -102,6 +107,7 @@
       display:block;
       height:450px;
       overflow:auto;
+      width: calc( 100% - 1em )
   }
   thead, tbody tr {
       display:table;
@@ -118,10 +124,17 @@
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color: #FFFFFF;
+    /* background-color: #FFFFFF; */
+    background-color: #003542;
     text-align: center;
     /* display: block; */
   }
+
+  /* h1, h2, h3, h4, h5, h6, strong{
+    font-family: 'Russo One', sans-serif;
+    font-weight: 500;
+} */
+
 </style>
   </head>
 <body>
@@ -146,7 +159,7 @@
         </li>
         {% if user.profile.user_type == 'Customer' %}
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'Customer_page' %}">{{user.first_name}}_{{user.last_name}}</a>
+          <a class="nav-link" href="{% url 'Customer_page' %}" style="color: white;">{{user.first_name}} {{user.last_name}}</a>
         </li>
         {% endif %}
         &nbsp;&nbsp;&nbsp;
@@ -225,7 +238,7 @@
 
 
 <footer class="footer sticky-bottom">
-  <div class="p-4 mt-5">
+  <div class="p-3 mt-5">
     <span class="text-muted">© 2020 Md. Omar Faruk. All Right Reserved</span>
   </div>
 </footer>

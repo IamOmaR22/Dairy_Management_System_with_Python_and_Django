@@ -5,98 +5,98 @@
 {% block content %}
 
 <style>
-h1,h5,h2,h3{
-font-family: 'Dancing Script', cursive;
-}
-h3{
-font-family: 'Dancing Script', cursive;
-font-size:40px;
-}
-.left-side{
+  h1,
+  h5,
+  h2,
+  h3 {
+    font-family: 'Dancing Script', cursive;
+    color:#B20032;
+    font-weight: bold;
+  }
 
+  h3 {
+    /* font-family: 'Dancing Script', cursive; */
+    font-family: 'Roboto Mono', monospace;
+    font-size: 40px;
+    text-align: center;
+  }
+
+  .left-side {
     background-image: url("{% static 'images\cow4.png' %}");
-
-
-}
-
+    /* border-radius: 50% 20% / 10% 40%; */
+  }
 </style>
-{% comment %} <style>
 
-h1 {
-  font-family: 'Dancing Script', cursive;
-  font-size: 40px;
-  text-align:right;
-  color:white;
-}
-</style> {% endcomment %}
+{% comment %}
+<style>
+  h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 40px;
+    text-align: right;
+    color: white;
+  }
+</style>
+{% endcomment %}
 
-{% comment %} <img src="{% static '\images\cow_banner.jpg' %}" class="img-fluid" alt="Responsive image"> {% endcomment %}
+{% comment %} <img src="{% static '\images\cow_banner.jpg' %}" class="img-fluid" alt="Responsive image">
+{% endcomment %}
 {% comment %} <p>
-    <strong>Total users registered: </strong> {{ count }}
-  </p> {% endcomment %}
-
-
-
-
-
+  <strong>Total users registered: </strong> {{ count }}
+</p> {% endcomment %}
 
 <div class="row">
   <div class="col-8 left-side">
-                 <!-- {% if user.is_authenticated and user.profile.user_type == 'Manager' %}
+    {% if user.is_authenticated and user.profile.user_type == 'Manager' %}
 
-                <h2>{{ user.profile.user_type }} Name == {{ user.username }}</h2>
-                <h5> Email id :{{ user.email}}</h5>
-                <h5> Contact Number :{{ user.profile.contact_number}}</h5>
+      <!-- <h2>{{ user.profile.user_type }} Name == {{ user.username }}</h2> -->
+      <h2>{{ user.profile.user_type }} Name == {{ user.first_name }} {{ user.last_name }}</h2>
+      <h5> Email id : {{ user.email}}</h5>
+      <h5> Contact Number : {{ user.profile.contact_number}}</h5>
 
-              {% endif %}
+    {% endif %}
 
-                {% if user.is_authenticated and user.profile.user_type == 'Customer' %}
-                <h1>{{ user.profile.user_type }} Name == {{ user.username }}</h1>
-                 <h5> Email id :{{ user.email}}</h5>
-                <h5> Contact Number :{{ user.profile.contact_number}}</h5>
-
-              {% endif %} -->
+    {% if user.is_authenticated and user.profile.user_type == 'Customer' %}
+      <!-- <h1>{{ user.profile.user_type }} Name == {{ user.username }}</h1> -->
+      <h2>{{ user.profile.user_type }} Name == {{ user.first_name }} {{ user.last_name }}</h2>
+      <h5> Email id : {{ user.email}}</h5>
+      <h5> Contact Number : {{ user.profile.contact_number}}</h5>
+    {% endif %}
   </div>
 
+  <div class="col-4 border border-light rounded">
+
+    <h3>
+      <storng style="color: black; font-weight: normal;">Contact Us</strong><hr>
+    </h3>
+    <h4><strong>{{ title }}</strong></h4>
 
 
+    {% if confirm_message %}
+    <p class="text-success">{{ confirm_message }}</p>
+    {% endif %}
 
-
-
-
-  <div class="col-4">
-
-<h3><storng>Contact Us</strong></h3>
-   <h4><strong>{{ title }}</strong></h4>
-
-
-  {% if confirm_message %}
-        <p class="text-success">{{ confirm_message }}</p>
-        {% endif %}
-
-{% if form %}
-
-  <form method="post">{% csrf_token %}
+    {% if form %}
+    <form method="post">{% csrf_token %}
 
       <div class="form-group">
         {{ form.name|as_crispy_field }}
       </div>
 
       <div class="form-group">
-       {{ form.subject|as_crispy_field }}
+        {{ form.subject|as_crispy_field }}
       </div>
-  <div class="form-group">
-     {{ form.email|as_crispy_field }}
-  </div>
-  <div class="form-group">
-     {{ form.message|as_crispy_field }}
-  </div>
+      <div class="form-group">
+        {{ form.email|as_crispy_field }}
+      </div>
+      <div class="form-group">
+        {{ form.message|as_crispy_field }}
+      </div>
 
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+      <button type="submit" class="btn btn-primary mb-2">Submit</button>
+    </form>
+  </div>
 </div>
-
-  </div>
 </div>
 {% endif %}
-  {% endblock %}
+
+{% endblock %}

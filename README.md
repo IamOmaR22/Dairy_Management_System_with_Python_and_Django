@@ -36,6 +36,6 @@
   <img width="660" height="300" src="main/static/front/images/screenshots/b.png">
 </p>
 -->
-**Copyright (c)** 2020-3020 Md. Omar Faruk
+**Copyright ©** 2020-3020 Md. Omar Faruk. All Right Reserved
 
 ## Go Through This Site Then You Will Know About This Site Properly.

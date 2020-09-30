@@ -3,66 +3,62 @@
 
 {% block content %}
 <style>
-    #back{
-        background-image: linear-gradient(to top, #d5d4d0 0%, #d5d4d0 1%, #eeeeec 31%, #efeeec 75%, #e9e9e7 100%);
-    }
-
+  #back {
+    background-image: linear-gradient(to top, #d5d4d0 0%, #d5d4d0 1%, #eeeeec 31%, #efeeec 75%, #e9e9e7 100%);
+  }
 </style>
 
 
-
-
-
 <div class="row justify-content-center">
- <div class="col-6">
+  <div class="col-6">
     <div id="back" class="card">
       <div class="card-body">
-        <h2>Add Vendor</h2>
-<form action="\addvendor\" method="POST">
-   {% csrf_token %}
+        <h2>Add Vendor</h2><hr>
+        <form action="\addvendor\" method="POST">
+          {% csrf_token %}
 
-  <div class="form-row">
-      <div class="form-group col-md-6">
-        {{ form.Manager_Name|as_crispy_field }}
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              {{ form.Manager_Name|as_crispy_field }}
+            </div>
+
+            <div class="form-group col-md-6">
+              {{ form.Vendor_Name|as_crispy_field }}
+            </div>
+
+          </div>
+
+
+
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              {{ form.Vendor_Contact|as_crispy_field }}
+            </div>
+            <div class="form-group col-md-6">
+              {{ form.Address|as_crispy_field }}
+            </div>
+
+          </div>
+          <div class="form-row ">
+            <div class="form-group col-md-6">
+              {{ form.joining_date|as_crispy_field }}
+            </div>
+          </div>
+
+
+          <div class="form-row ">
+            <div class="form-group col-md-6">
+
+              {{ form.Status|as_crispy_field }}
+
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Save</button>
+        </form>
       </div>
-
-      <div class="form-group col-md-6">
-      {{ form.Vendor_Name|as_crispy_field }}
-        </div>
-        
-  </div>
-
-
-
-<div class="form-row">
-      <div class="form-group col-md-6">
-          {{ form.Vendor_Contact|as_crispy_field }}
-        </div>
-      <div class="form-group col-md-6">
-          {{ form.Address|as_crispy_field }}
-      </div>
-
-</div>
- <div class="form-row ">
- <div class="form-group col-md-6">
-          {{ form.joining_date|as_crispy_field }}
-      </div>
-     </div> 
-
-
-  <div class="form-row ">
-      <div class="form-group col-md-6">
-
-          {{ form.Status|as_crispy_field }}
-
-        </div>
     </div>
-
-  <button type="submit" class="btn btn-primary">Save</button>
-</form>
-</div>
-</div>
-</div>
+  </div>
 </div>
 
 

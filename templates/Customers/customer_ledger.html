@@ -99,9 +99,9 @@
             <th scope="row">{{ forloop.counter }}</th>
             <td>{{ ledger.date }}</td>
             <td>{{ ledger.related_milk_category }}</td>
-            <td> ₹ {{ ledger.price }}</td>
+            <td>{{ ledger.price }} Tk.</td>
             <td> {{ ledger.quantity }} L</td>
-            <td>₹ {% multiply ledger.quantity ledger.price %} </td>
+            <td>{% multiply ledger.quantity ledger.price %} Tk.</td>
 
 
             <td>

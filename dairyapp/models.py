@@ -33,7 +33,7 @@ class MilkCategory(models.Model):
 
 
     def __str__(self):
-        return self.animalname +"----- ₹ " + str(self.milkprice)
+        return self.animalname +" ---- " + str(self.milkprice) + " Tk."
 
 
 # Individual vendor dashboard
@@ -90,7 +90,7 @@ class CustomerMilkCategory(models.Model):
         return f"{self.related_customer.first_name} {self.related_customer.last_name}"
 
     def __str__(self):
-        return f"{self.related_customer}: ({self.animalname}, ₹ {self.milkprice})"
+        return f"{self.related_customer}: ({self.animalname}, {self.milkprice})  Tk."
 
 
 # Individual Customer dashboard

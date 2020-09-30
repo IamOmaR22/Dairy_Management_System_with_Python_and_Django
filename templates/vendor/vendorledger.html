@@ -115,9 +115,9 @@
             <th scope="row">{{ forloop.counter }}</th>
             <td>{{ data.date }}</td>
             <td>{{ data.related_milkcategory }}</td>
-            <td> ₹ {{ data.price }}</td>
+            <td>{{ data.price }} Tk.</td>
             <td>{{ data.quantity }} L</td>
-            <td> ₹ {% multiply data.quantity data.price %}</td>
+            <td>{% multiply data.quantity data.price %} Tk.</td>
             <td>
 
               <form action="{% url 'ledger_delete' %}" method="POST">{% csrf_token %}

@@ -6,11 +6,11 @@
   <div class="col-6">
     <div class="card">
       <div class="card-body">
-        <h2>Log in</h2>
+        <h2 class="row justify-content-center text-dark"><i class="fa fa-sign-in-alt" style="color: black; pointer-events: none;">&nbsp;Log In</i></h2><hr>
         <form method="post" novalidate>
           {% csrf_token %}
           {{ form|crispy }}
-          <button type="submit" class="btn btn-primary">Log in</button>
+          <button type="submit" class="btn btn-dark mb-2">Login</button>
           <a href="{% url 'password_reset' %}" class="btn btn-link">Forgot your password?</a>
           </form>
           </div>
@@ -18,3 +18,10 @@
   </div>
 </div>
 {% endblock %}
+
+
+
+
+
+
+

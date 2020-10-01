@@ -61,7 +61,23 @@
   .dropdown:hover .dropdown-menu{
       display: block;
       margin-top: 0;  /* remove the gap so it doesn't close */
+      background-color: #003542;
+      color: #FFFFFF;
   }
+
+  .dropdown-menu a:hover, i:hover{
+    color: #F3798E;
+    background-color: #003542;
+  }
+  
+  .dropdown a, i{
+    color: #FFFFFF;   /* color: #fff342!important; */
+  }
+
+
+  /* .fa-plus:hover {
+    color: red;
+  } */
 
   .logo-image{
     width: 60px;
@@ -82,7 +98,8 @@
   }
 
   #totalid{
-    color: #B81900;
+    /* color: #B81900; */
+    color:#B20032;
   }
 
   th{
@@ -95,6 +112,7 @@
     font-family: 'Roboto Mono', monospace;
     /* color:#800000; */
     color:#B20032;
+    /* color:#F3798E; */
     text-align:center;
     font-size:40px;
     padding: 7px;
@@ -134,7 +152,6 @@
     font-family: 'Russo One', sans-serif;
     font-weight: 500;
 } */
-
 </style>
   </head>
 <body>
@@ -170,7 +187,7 @@
               VENDORS
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item " href="{% url 'addvendor' %}"><i class="fas fa-plus"></i> <span class="menu-text-size">&nbsp;&nbsp;VENDOR</span></a>
+              <a class="dropdown-item" href="{% url 'addvendor' %}"><i class="fas fa-plus"></i> <span class="menu-text-size">&nbsp;&nbsp;VENDOR</span></a>
               <a class="dropdown-item" href="{% url 'add_milk_category' %}"><i class="fas fa-plus"></i><span class="menu-text-size">&nbsp;&nbsp; MILK CATEGORY</span></a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="{% url 'allvendor' %}"><i class="fa fa-user" ></i><span class="menu-text-size">&nbsp;&nbsp; ALL VENDORS</span></a>
@@ -200,28 +217,28 @@
 
 
       {% if user.is_authenticated %}
-          <ul class="navbar-nav">
+        <ul class="navbar-nav">
 
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {% if user.profile.user_type == 'Manager' %}<strong>MANAGER </strong>{% elif user.profile.user_type == 'Customer'  %}<strong>CUSTOMER </strong> {% endif %}{{ user.username }}
-              </a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {% if user.profile.user_type == 'Manager' %}<strong>MANAGER </strong>{% elif user.profile.user_type == 'Customer'  %}<strong>CUSTOMER </strong> {% endif %}{{ user.username }}
+            </a>
 
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{% url 'password_change' %}"><i class="fa fa-cogs"></i><span class="menu-text-size">&nbsp;&nbsp; CHANGE PASSWORD</span></a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'password_change' %}"><i class="fa fa-cogs"></i><span class="menu-text-size">&nbsp;&nbsp; CHANGE PASSWORD</span></a>
 
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i><span class="menu-text-size">&nbsp;&nbsp; LOG OUT</span></a>
-              </div>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i><span class="menu-text-size">&nbsp;&nbsp; LOG OUT</span></a>
+            </div>
 
-            </li>
+          </li>
 
-          </ul>
-          {% else %}
-      <form class="form-inline my-2 my-lg-0">
+        </ul>
+      {% else %}
+        <form class="form-inline my-2 my-lg-0">
+          <a href="{% url 'login' %}" class="nav-link" style="color: #FFFFFF;">LOG IN</a>
+        </form>
 
-        <a href="{% url 'login' %}" class="btn btn-outline-primary">LOG IN</a>
-      </form>
       {% endif %}
     </div>
   </div>

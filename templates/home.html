@@ -23,7 +23,8 @@
   }
 
   .left-side {
-    background-image: url("{% static 'images\cow4.png' %}");
+    /* background-image: url("{% static 'images\cow4.png' %}"); */
+    background-image: url("{% static 'images\dairy2.png' %}");
     /* border-radius: 50% 20% / 10% 40%; */
   }
 </style>
@@ -46,7 +47,7 @@
 </p> {% endcomment %}
 
 <div class="row">
-  <div class="col-8 left-side">
+  <div class="col-7 left-side mr-4">
     {% if user.is_authenticated and user.profile.user_type == 'Manager' %}
 
       <!-- <h2>{{ user.profile.user_type }} Name == {{ user.username }}</h2> -->
@@ -64,10 +65,10 @@
     {% endif %}
   </div>
 
-  <div class="col-4 border border-light rounded">
+  <div class="card col-4 ml-5" style="border: 2px #2B2D33!important; background-color: #2B2D33; color: #B8C6CC;">
 
     <h3>
-      <storng style="color: black; font-weight: normal;">Contact Us</strong><hr>
+      <storng style="color: #B8C6CC; font-weight: normal;">Contact Us</strong><hr>
     </h3>
     <h4><strong>{{ title }}</strong></h4>
 
@@ -93,7 +94,7 @@
         {{ form.message|as_crispy_field }}
       </div>
 
-      <button type="submit" class="btn btn-primary mb-2">Submit</button>
+      <button type="submit" class="btn btn-dark mb-2">Submit</button>
     </form>
   </div>
 </div>

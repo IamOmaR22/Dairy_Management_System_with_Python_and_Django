@@ -68,7 +68,7 @@
           <td scpoe="col">
             <div class="form-row">
               <div class="col">
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-dark border">Save</button>
               </div>
             </div>
           </td>
@@ -110,7 +110,7 @@
 
           <form action="{% url 'ledger_delete' %}" method="POST">
             {% csrf_token %}
-            <button class="btn btn-info form-control" type="submit" name="ledger_pk" value="{{data.pk}}">Delete</button>
+            <button class="btn btn-danger form-control" type="submit" name="ledger_pk" value="{{data.pk}}">Delete</button>
           </form>
         </td>
       </tr>

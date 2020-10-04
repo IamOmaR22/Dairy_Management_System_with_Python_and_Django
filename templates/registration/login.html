@@ -2,11 +2,18 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+<style>
+  #back {
+    background-color: #2B2D33;
+    color: #B8C6CC;
+  }
+</style>
+
 <div class="row justify-content-center">
   <div class="col-6">
-    <div class="card">
+    <div class="card" id="back">
       <div class="card-body">
-        <h2 class="row justify-content-center text-dark"><i class="fa fa-sign-in-alt" style="color: black; pointer-events: none;">&nbsp;Log In</i></h2><hr>
+        <h2 class="row justify-content-center text-dark"><i class="fa fa-sign-in-alt" style="color: #B8C6CC; pointer-events: none;">&nbsp;Log In</i></h2><hr>
         <form method="post" novalidate>
           {% csrf_token %}
           {{ form|crispy }}

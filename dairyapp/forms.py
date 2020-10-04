@@ -81,7 +81,7 @@ class vendorledgerForm(forms.Form):
 #       ||  Customer Forms (User) Started  ||       #
 #***************************************************#
 
-# Add Customer
+# Add Customer - This is a Profile model (For Create Admin/Manager/Customer)
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile

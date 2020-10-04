@@ -16,7 +16,7 @@ urlpatterns = [
         path('ledger_delete/',views.ledger_delete,name='ledger_delete'),
 
         # Customer Started
-        path('addcustomer/',views.addcustomer,name='addcustomer'),
+        path('addcustomer/',views.addcustomer,name='addcustomer'),  # Add Customer - This is a Profile model (For Create Admin/Manager/Customer)
         path('customer_milk_category/',views.customer_milk_category,name='customer_milk_category'),
         path('allcustomer/',views.allcustomer,name='allcustomer'),
         path('customer_ledger/<int:pk>/', views.customer_ledger, name='customer_ledger'),  # Individual Customer dashboard

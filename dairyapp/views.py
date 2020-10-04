@@ -199,14 +199,14 @@ def ledger_delete(request):
 #       ||  Customer Views (User) Started  ||       #
 #***************************************************#
 
-# Add Customer
+# Add Customer - This is a Profile model (For Create Admin/Manager/Customer)
 @login_required
 def addcustomer(request):
     if request.method == 'POST':
         form = ProfileForm(request.POST)
-        print("i am in addcustomer upper")
+        # print("i am in addcustomer upper")
         if form.is_valid():
-            print("i am in addcustomer")
+            # print("i am in addcustomer")
             form.save()
             return redirect('customer_milk_category')
     else:

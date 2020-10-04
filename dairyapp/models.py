@@ -53,7 +53,7 @@ class vendorledger(models.Model):
 #       ||  Customer Models (User) Started  ||       #
 #****************************************************#
 
-# Add Customer
+# Add Customer - This is a Profile model (For Create Admin/Manager/Customer)
 class Profile(models.Model):
     CHOICES1 = (
         ('Admin','Admin'),
@@ -65,7 +65,6 @@ class Profile(models.Model):
     contact_number = models.CharField(max_length=20,null=True,unique=True)
     joining_data = models.DateField(auto_now_add=False)
     address = models.CharField(max_length=500,null=True)
-
 
     class Meta:
         ordering = ('-user_type',)

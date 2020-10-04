@@ -19,7 +19,7 @@
     {% for vendorobj in vendor %}
     <tr>
       
-      <td> <a style="text-decoration:none;" href="{% url 'ledger'  pk=vendorobj.pk %}" class="btn btn-link"><strong>{{ vendorobj.vendorname }}</strong></a></td>
+      <td> <a style="text-decoration:none;" href="{% url 'ledger'  pk=vendorobj.pk %}" class="btn btn-link text-info"><strong>{{ vendorobj.vendorname }}</strong></a></td>
       <td>{{ vendorobj.joiningdate }}</td>
       <td>{{ vendorobj.vendorcontact }}</td>
       <td>{{ vendorobj.address }}</td>

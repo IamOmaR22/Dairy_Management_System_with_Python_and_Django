@@ -4,7 +4,24 @@
 
 
 {% block content %}
-
+<style>
+  .form-control{
+    background-color: #2B2D33!important;
+    color: #B8C6CC!important;
+  }
+  select:focus {
+    background-color: #2B2D33!important;
+    color: #B8C6CC!important;
+  }
+  option:focus {
+    background-color: #2B2D33!important;
+    color: #B8C6CC!important;
+  }
+  input:focus {
+    background-color: #2B2D33!important;
+    color: #B8C6CC!important;
+  }
+</style>
 
 <h2 class="vendor_name_heading"><strong>{{ customer_full_name }}</strong></h2>
 
@@ -22,12 +39,13 @@
             </thead>
 
         <tbody>
-          <form action="\customer_ledger_save\" method="POST">{% csrf_token %}
+          <form action="\customer_ledger_save\" method="POST">
+            {% csrf_token %}
               <tr>
                <td scpoe="col">
                  <div class="form-row">
                    <div class="col">
-                     <select  class="form-control" id="customer" name="customer">
+                     <select class="form-control" id="customer" name="customer">
                           <option value="{{ customer_obj.pk }}"> {{ customer_obj.first_name }} {{ customer_obj.last_name }} </option>
                         </select>
                         </div>
@@ -62,7 +80,7 @@
                 <td scpoe="col">
                   <div class="form-row">
                     <div class="col">
-                      <button type="submit" class="btn btn-dark border">Save</button>
+                      <button type="submit" class="btn btn-dark border"><i class="fas fa-save" style="background-color: unset !important;">&nbsp;&nbsp;Save</i></button>
                     </div>
                   </div>
                 </td>
@@ -106,7 +124,7 @@
 
             <td>
               <form action="{% url 'customer_ledger_delete' %}" method="POST">{% csrf_token %}
-                <button class="btn btn-danger form-control"type="submit" name="customer_pk" value="{{ledger.pk}}">Delete</button>
+                <button class="btn btn-danger"type="submit" name="customer_pk" value="{{ledger.pk}}"><i class="far fa-trash-alt" style="background-color: unset !important; color: unset !important;">&nbsp;&nbsp;Delete</i></button>
                 </form>
                 </td>
           </tr>
@@ -128,11 +146,11 @@ $( function() {
 } );
 </script> -->
 <script>
-        $(function() {
-           $( "#datepicker" ).datepicker({dateFormat:"dd-mm-yy",});
+  $(function() {
+      $( "#datepicker" ).datepicker({dateFormat:"dd-mm-yy",});
 
-        });
-     </script>
+  });
+</script>
 
 
 {% endblock %}

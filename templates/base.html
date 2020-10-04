@@ -17,6 +17,10 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+    <!-- google font api -->
+    <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playball&display=swap" rel="stylesheet">
+
     <!-- Favicon Icon -->
     <link href="{% static 'images/favicon.png' %}" rel="shortcut icon" type="image/png"/>
 
@@ -60,6 +64,21 @@
         /* font-family: 'Russo One', sans-serif; */
         /* font-weight: 500; */
         /* font-family: 'Roboto Mono', monospace; */
+  }
+
+  .nav-item {
+    /* text-transform: uppercase; */
+    /* text-transform: lowercase; */
+    text-transform: capitalize;
+    /* font-family: 'Piazzolla', serif; */
+    font-family: 'Bree Serif', serif;
+  }
+  .form-inline {
+    /* text-transform: uppercase; */
+    /* text-transform: lowercase; */
+    text-transform: capitalize;
+    /* font-family: 'Piazzolla', serif; */
+    font-family: 'Bree Serif', serif;
   }
 
   .dropdown:hover .dropdown-menu{
@@ -163,7 +182,7 @@
   /* h1, h2, h3, h4, h5, h6, strong{
     font-family: 'Russo One', sans-serif;
     font-weight: 500;
-} */
+  } */
 </style>
   </head>
 <body>
@@ -184,7 +203,7 @@
       <ul class="navbar-nav mr-auto">
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'home' %}" style="color: #FFFFFF;">HOME</a>
+          <a class="nav-link" href="{% url 'home' %}" style="color: #FFFFFF;">Home</a>
         </li>
         {% if user.profile.user_type == 'Customer' %}
         <li class="nav-item">
@@ -196,26 +215,26 @@
 
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              VENDORS
+              Vendor
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="{% url 'addvendor' %}"><i class="fas fa-plus"></i> <span class="menu-text-size">&nbsp;&nbsp;VENDOR</span></a>
-              <a class="dropdown-item" href="{% url 'add_milk_category' %}"><i class="fas fa-plus"></i><span class="menu-text-size">&nbsp;&nbsp; MILK CATEGORY</span></a>
+              <a class="dropdown-item" href="{% url 'addvendor' %}"><i class="fas fa-plus"></i> <span class="menu-text-size">&nbsp;&nbsp;Vendor</span></a>
+              <a class="dropdown-item" href="{% url 'add_milk_category' %}"><i class="fas fa-plus"></i><span class="menu-text-size">&nbsp;&nbsp; Milk Category</span></a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="{% url 'allvendor' %}"><i class="fa fa-user" ></i><span class="menu-text-size">&nbsp;&nbsp; ALL VENDORS</span></a>
+              <a class="dropdown-item" href="{% url 'allvendor' %}"><i class="fa fa-user" ></i><span class="menu-text-size">&nbsp;&nbsp; All Vendors</span></a>
               </div>
           </li>
             &nbsp;&nbsp;&nbsp;
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              CUSTOMERS
+              Customers
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="{% url 'signup' %}"><i class="fas fa-plus"></i><span class="menu-text-size">&nbsp;&nbsp; SIGN UP</span></a>
-              <a class="dropdown-item" href="{% url 'addcustomer' %}"><i class="fas fa-plus"></i><span class="menu-text-size">&nbsp;&nbsp; CUSTOMER</span></a>
-                <a class="dropdown-item" href="{% url 'customer_milk_category' %}"><i class="fas fa-plus"></i><span class="menu-text-size">&nbsp;&nbsp; MILK CATEGORY</span></a>
+              <a class="dropdown-item" href="{% url 'signup' %}"><i class="fas fa-plus"></i><span class="menu-text-size">&nbsp;&nbsp; Sign Up</span></a>
+              <a class="dropdown-item" href="{% url 'addcustomer' %}"><i class="fas fa-plus"></i><span class="menu-text-size">&nbsp;&nbsp; Customer</span></a>
+                <a class="dropdown-item" href="{% url 'customer_milk_category' %}"><i class="fas fa-plus"></i><span class="menu-text-size">&nbsp;&nbsp; Milk Category</span></a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="{% url 'allcustomer' %}"> <i class="fa fa-user" ></i><span class="menu-text-size">&nbsp;&nbsp; ALL CUSTOMERS</span></a>
+              <a class="dropdown-item" href="{% url 'allcustomer' %}"> <i class="fa fa-user" ></i><span class="menu-text-size">&nbsp;&nbsp; All Customers</span></a>
 
             </div>
           </li>
@@ -233,14 +252,14 @@
 
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          {% if user.profile.user_type == 'Manager' %}<strong>MANAGER </strong>{% elif user.profile.user_type == 'Customer'  %}<strong>CUSTOMER </strong> {% endif %}{{ user.username }}
+          {% if user.profile.user_type == 'Manager' %}<strong>Manager </strong>{% elif user.profile.user_type == 'Customer'  %}<strong>Customer </strong> {% endif %}{{ user.username }}
             </a>
 
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="{% url 'password_change' %}"><i class="fa fa-cogs"></i><span class="menu-text-size">&nbsp;&nbsp; CHANGE PASSWORD</span></a>
+              <a class="dropdown-item" href="{% url 'password_change' %}"><i class="fa fa-cogs"></i><span class="menu-text-size">&nbsp;&nbsp; Change Password</span></a>
 
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i><span class="menu-text-size">&nbsp;&nbsp; LOG OUT</span></a>
+              <a class="dropdown-item" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i><span class="menu-text-size">&nbsp;&nbsp; Log Out</span></a>
             </div>
 
           </li>
@@ -248,7 +267,7 @@
         </ul>
       {% else %}
         <form class="form-inline my-2 my-lg-0">
-          <a href="{% url 'login' %}" class="nav-link" style="color: #FFFFFF;">LOG IN</a>
+          <a href="{% url 'login' %}" class="nav-link" style="color: #FFFFFF;"><i class="fas fa-sign-in-alt" style="background-color: unset !important;">&nbsp;&nbsp;Log In</i></a>
         </form>
 
       {% endif %}
@@ -267,7 +286,7 @@
 
 
 <footer class="footer sticky-bottom">
-  <div class="p-2 mt-5">
+  <div class="mt-5 py-3">
     <span>© 2020 Md. Omar Faruk. All Right Reserved</span>
   </div>
 </footer>

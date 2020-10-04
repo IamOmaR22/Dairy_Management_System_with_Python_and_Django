@@ -4,6 +4,25 @@
 
 
 {% block content %}
+<style>
+  .form-control{
+    background-color: #2B2D33!important;
+    color: #B8C6CC!important;
+  }
+  select:focus {
+    background-color: #2B2D33!important;
+    color: #B8C6CC!important;
+  }
+  option:focus {
+    background-color: #2B2D33!important;
+    color: #B8C6CC!important;
+  }
+  input:focus {
+    background-color: #2B2D33!important;
+    color: #B8C6CC!important;
+  }
+</style>
+
 <h2 class="vendor_name_heading"><strong>{{ vendor_obj }}</strong></h2>
 
 <div class="table-responsive">
@@ -65,7 +84,7 @@
           <td scpoe="col">
             <div class="form-row">
               <div class="col">
-                <button type="submit" class="btn btn-dark border">Save</button>
+                <button type="submit" class="btn btn-dark border"><i class="fas fa-save" style="background-color: unset !important;">&nbsp;&nbsp;Save</i></button>
               </div>
             </div>
           </td>
@@ -107,7 +126,7 @@
 
           <form action="{% url 'ledger_delete' %}" method="POST">
             {% csrf_token %}
-            <button class="btn btn-danger form-control" type="submit" name="ledger_pk" value="{{data.pk}}">Delete</button>
+            <button class="btn btn-danger" type="submit" name="ledger_pk" value="{{data.pk}}"><i class="far fa-trash-alt" style="background-color: unset !important; color: unset !important;">&nbsp;&nbsp;Delete</i></button>
           </form>
         </td>
       </tr>

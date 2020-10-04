@@ -15,7 +15,7 @@ def home(request):
     confirm_message = None
     form = contactForm(request.POST or None)
     if form.is_valid():
-        receivers_list = ['gaurav.nagar14cs003@gmail.com']
+        receivers_list = ['omarfaruk2468@gmail.com']
         subject = form.cleaned_data['subject']
         name = form.cleaned_data['name']
         comment = form.cleaned_data['message']

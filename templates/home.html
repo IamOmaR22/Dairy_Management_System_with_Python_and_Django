@@ -2,17 +2,19 @@
 {% load crispy_forms_tags %}
 
 {% load static %}
-{% block content %}
 
+{% block content %}
 <style>
   h1,
   h5,
   h2,
   h3 {
-    font-family: 'Dancing Script', cursive;
+    /* font-family: 'Dancing Script', cursive; */
+    font-family: 'Playball', cursive;
     /* color:#B20032; */
-    color:#F3798E;
-    font-weight: bold;
+    color: #F3798E;
+    /* font-weight: bold; */
+    margin: -3px;
   }
 
   h3 {
@@ -26,6 +28,11 @@
     /* background-image: url("{% static 'images\cow4.png' %}"); */
     background-image: url("{% static 'images\dairy2.png' %}");
     /* border-radius: 50% 20% / 10% 40%; */
+  }
+
+  .form-control{
+    background-color: #2B2D33!important;
+    color: #B8C6CC!important;
   }
 </style>
 
@@ -50,25 +57,26 @@
   <div class="col-7 left-side mr-4">
     {% if user.is_authenticated and user.profile.user_type == 'Manager' %}
 
-      <!-- <h2>{{ user.profile.user_type }} Name == {{ user.username }}</h2> -->
-      <h2>{{ user.profile.user_type }} Name == {{ user.first_name }} {{ user.last_name }}</h2>
-      <h5> Email id : {{ user.email}}</h5>
-      <h5> Contact Number : {{ user.profile.contact_number}}</h5>
+    <!-- <h2>{{ user.profile.user_type }} Name == {{ user.username }}</h2> -->
+    <h2>{{ user.profile.user_type }} Name - {{ user.first_name }} {{ user.last_name }}</h2>
+    <h5> Email id : {{ user.email}}</h5>
+    <h5> Contact Number : {{ user.profile.contact_number}}</h5>
 
     {% endif %}
 
     {% if user.is_authenticated and user.profile.user_type == 'Customer' %}
-      <!-- <h1>{{ user.profile.user_type }} Name == {{ user.username }}</h1> -->
-      <h2>{{ user.profile.user_type }} Name == {{ user.first_name }} {{ user.last_name }}</h2>
-      <h5> Email id : {{ user.email}}</h5>
-      <h5> Contact Number : {{ user.profile.contact_number}}</h5>
+    <!-- <h1>{{ user.profile.user_type }} Name == {{ user.username }}</h1> -->
+    <h2>{{ user.profile.user_type }} Name - {{ user.first_name }} {{ user.last_name }}</h2>
+    <h5> Email id : {{ user.email}}</h5>
+    <h5> Contact Number : {{ user.profile.contact_number}}</h5>
     {% endif %}
   </div>
 
   <div class="card col-4 ml-5" style="border: 2px #2B2D33!important; background-color: #2B2D33; color: #B8C6CC;">
 
     <h3 class="my-2">
-      <storng style="color: #B8C6CC; font-weight: normal;">Contact Us</strong><hr>
+      <storng style="color: #B8C6CC; font-weight: normal;">Contact Us</strong>
+        <hr>
     </h3>
     <h4><strong>{{ title }}</strong></h4>
 

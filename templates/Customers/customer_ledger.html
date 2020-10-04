@@ -62,7 +62,7 @@
                 <td scpoe="col">
                   <div class="form-row">
                     <div class="col">
-                      <button type="submit" class="btn btn-primary">Save</button>
+                      <button type="submit" class="btn btn-dark border">Save</button>
                     </div>
                   </div>
                 </td>
@@ -106,14 +106,14 @@
 
             <td>
               <form action="{% url 'customer_ledger_delete' %}" method="POST">{% csrf_token %}
-                <button class="btn btn-info form-control"type="submit" name="customer_pk" value="{{ledger.pk}}">Delete</button>
+                <button class="btn btn-danger form-control"type="submit" name="customer_pk" value="{{ledger.pk}}">Delete</button>
                 </form>
                 </td>
           </tr>
 {% endfor %}
 <tr>
 <td colspan="4"></td>
-<td id="totalid"><strong>{{ alltotal }}</strong></td>
+<td id="totalid"><strong>Grand Total - {{ alltotal }} Tk.</strong></td>
 </tr>
           </tbody>
       </table>

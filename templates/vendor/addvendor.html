@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% load static %}
 
 {% block content %}
 <style>
@@ -17,10 +18,13 @@
     background-color: #2B2D33!important;
     color: #B8C6CC!important;
   }
+
+  /* Profile */
+
 </style>
 
 <div class="row justify-content-center">
-  <div class="col-6">
+  <div class="col-7 mr-3">
     <div id="back" class="card" style="border: 2px #2B2D33!important;">
       <div class="card-body">
         <h2>Add Vendor</h2><hr>
@@ -69,6 +73,42 @@
       </div>
     </div>
   </div>
+
+  <div class="col-3 ml-5">
+    <div class="card card-shadow text-center border-0">
+      
+      <div class="card-block">
+        <a class="avatar avatar-lg">
+            <img class="w-50 rounded-circle my-4" src="{% static 'images/omar.jpg' %}" alt="Md. Omar Faruk">
+        </a>
+        <h4 class="profile-user">Md. Omar Faruk</h4>
+
+        <p>Python Developer</p>      
+
+        <div class="profile-social mb-4">
+            <a class="fab fa-github" style="color: #B8C6CC!important;" target="_blank" href="https://github.com/IamOmaR22"></a>
+            <a class="fab fa-linkedin" style="color: #B8C6CC!important; margin-left: 0.5rem;" target="_blank" href="https://www.linkedin.com/in/iamomar22"></a>
+            <a class="fab fa-dev" style="color: #B8C6CC!important; margin-left: 0.5rem;" target="_blank" href="https://dev.to/iamomar22"></a>
+            <a class="fab fa-stack-overflow" style="color: #B8C6CC!important; margin-left: 0.5rem;" target="_blank" href="https://stackoverflow.com/users/14398143/md-omar-faruk"></a>
+        </div>
+      </div>
+      
+      <div class="card-footer">
+        <div class="row no-space">
+            <div class="col">
+            <strong class="profile-stat-count">0</strong>
+            <span>Contacts</span>
+            </div>
+            <div class="col">
+            <strong class="profile-stat-count">0</strong>
+            <span>Discussions</span>
+            </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
 </div>
 
 

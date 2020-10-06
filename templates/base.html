@@ -183,6 +183,13 @@
     font-family: 'Russo One', sans-serif;
     font-weight: 500;
   } */
+
+  .back-to-top {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    display: none;
+  }
 </style>
   </head>
 <body>
@@ -266,7 +273,7 @@
 
         </ul>
       {% else %}
-        <form class="form-inline my-2 my-lg-0">
+        <form class="form-inline my-2 my-lg-0 jugnu">
           <a href="{% url 'login' %}" class="nav-link" style="color: #FFFFFF;"><i class="fas fa-sign-in-alt" style="background-color: unset !important;">&nbsp;&nbsp;Log In</i></a>
         </form>
 
@@ -283,7 +290,28 @@
 
 </div>
 
+<!-- Scroll to top button Start -->
+<a id="back-to-top" href="#" class="btn btn-dark back-to-top" role="button"><i class="fas fa-chevron-up" id="scoll-omar"></i></a>
 
+<script>
+  $(document).ready(function(){
+	$(window).scroll(function () {
+			if ($(this).scrollTop() > 50) {
+				$('#back-to-top').fadeIn();
+			} else {
+				$('#back-to-top').fadeOut();
+			}
+		});
+		// scroll body to 0px on click
+		$('#back-to-top').click(function () {
+			$('body,html').animate({
+				scrollTop: 0
+			}, 500);
+			return false;
+		});
+  });
+</script>
+<!-- Scroll to top button End -->
 
 <footer class="footer sticky-bottom">
   <div class="mt-5 py-3">

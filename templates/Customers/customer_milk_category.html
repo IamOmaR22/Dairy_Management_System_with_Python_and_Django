@@ -59,13 +59,13 @@
       <div class="card-footer">
         <div class="row no-space">
             <div class="col">
-            <strong class="profile-stat-count">0</strong>
-            <span>Contacts</span>
-            </div>
-            <div class="col">
-            <strong class="profile-stat-count">0</strong>
-            <span>Discussions</span>
-            </div>
+              <div class="col my-2">
+                <h5 class="profile-stat-count text-success">Users List</h5><hr>
+                {% for u_list in cl %}
+                  <strong class="text-primary">{{u_list}}</strong>
+                  <br>
+                {% endfor %}
+              </div>
         </div>
       </div>
 

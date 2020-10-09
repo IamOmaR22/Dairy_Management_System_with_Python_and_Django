@@ -10,6 +10,8 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 
+from .models import Vendor, Profile
+
 def home(request):
     title = ''
     confirm_message = None
@@ -58,6 +60,7 @@ def signup(request):
 # Add Vendor
 @login_required
 def addvendor(request):
+    vl = Vendor.objects.only('vendorname')
     if request.method == 'POST':
         form = AddVendorForm(request.POST)
         if form.is_valid():
@@ -73,12 +76,13 @@ def addvendor(request):
             return redirect('add_milk_category') # milkcategoryform.html
     else:
         form = AddVendorForm()
-        return render(request, 'vendor/addvendor.html', {'form':form})
+        return render(request, 'vendor/addvendor.html', {'form':form, 'vl':vl})
 
 
 # Vendor MilkCategory
 @login_required
 def add_milk_category(request):
+    vl = Vendor.objects.only('vendorname')
     if request.method == 'POST':
         form = MilkCategoryForm(request.POST)
         if form.is_valid():
@@ -86,7 +90,7 @@ def add_milk_category(request):
             return redirect('add_milk_category')
     else:
         form = MilkCategoryForm()
-        return render(request,'vendor/milkcategoryform.html',{'form':form})
+        return render(request,'vendor/milkcategoryform.html', {'form':form, 'vl':vl})
 
 
 # All vendors dashboard
@@ -216,6 +220,7 @@ def addcustomer(request):
 
 # Customer MilkCategory
 def customer_milk_category(request):
+    cl = Profile.objects.only('user')
     if request.method == 'POST':
         form = CustomerMilkCategoryForm(request.POST)
         if form.is_valid():
@@ -223,7 +228,7 @@ def customer_milk_category(request):
             return redirect('home')
     else:
         form = CustomerMilkCategoryForm()
-    return render(request,'Customers/customer_milk_category.html',{'form':form})
+    return render(request,'Customers/customer_milk_category.html', {'form':form, 'cl':cl})
 
 
 # Customer_page
